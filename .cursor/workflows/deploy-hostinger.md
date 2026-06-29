@@ -115,23 +115,23 @@ O Git da Hostinger **substitui o diretório de deploy** pelo conteúdo do reposi
 ### Uma vez no servidor (SSH)
 
 ```bash
-mkdir -p ~/private/adm_portifolio/public-build
-mkdir -p ~/private/adm_portifolio/storage-app-public
-nano ~/private/adm_portifolio/.env    # preencher DB, ADMIN_PASSWORD, DEEPL, SMTP...
-chmod 600 ~/private/adm_portifolio/.env
+mkdir -p ~/domains/maiconoliveiradev.com.br/private/adm_portifolio/public-build
+mkdir -p ~/domains/maiconoliveiradev.com.br/private/adm_portifolio/storage-app-public
+nano ~/domains/maiconoliveiradev.com.br/private/adm_portifolio/.env    # preencher DB, ADMIN_PASSWORD, DEEPL, SMTP...
+chmod 600 ~/domains/maiconoliveiradev.com.br/private/adm_portifolio/.env
 ```
 
 O `deploy-hostinger.sh` cria symlinks:
-- `.env` → `~/private/adm_portifolio/.env`
-- `storage/app/public` → `~/private/adm_portifolio/storage-app-public`
-- `public/build` → `~/private/adm_portifolio/public-build`
+- `.env` → `~/domains/maiconoliveiradev.com.br/private/adm_portifolio/.env`
+- `storage/app/public` → `~/domains/maiconoliveiradev.com.br/private/adm_portifolio/storage-app-public`
+- `public/build` → `~/domains/maiconoliveiradev.com.br/private/adm_portifolio/public-build`
 
 ### Comando pós-deploy no hPanel
 
 hPanel → **Git** → repositório → **Comandos de implantação**:
 
 ```bash
-cd $HOME/domains/maiconoliveiradev.com.br/public_html/adm_portifolio/apps/api && export PORTFOLIO_PERSISTENT_DIR=$HOME/private/adm_portifolio && bash scripts/deploy-hostinger.sh
+cd $HOME/domains/maiconoliveiradev.com.br/public_html/adm_portifolio/apps/api && export PORTFOLIO_PERSISTENT_DIR=$HOME/domains/maiconoliveiradev.com.br/private/adm_portifolio && bash scripts/deploy-hostinger.sh
 ```
 
 Sem esse comando, cada push só atualiza o código e **não** reinstala dependências nem restaura o `.env`.
@@ -140,7 +140,7 @@ Sem esse comando, cada push só atualiza o código e **não** reinstala dependê
 
 ## Fase 4 — `.env` de produção
 
-Criar **`~/private/adm_portifolio/.env`** (não dentro de `adm_portifolio/`) a partir de `apps/api/.env.example`:
+Criar **`~/domains/maiconoliveiradev.com.br/private/adm_portifolio/.env`** (não dentro de `adm_portifolio/`) a partir de `apps/api/.env.example`:
 
 ```env
 APP_NAME="Portfolio Admin"
@@ -200,7 +200,7 @@ npm ci && npm run build
 
 Envie o build para a pasta **persistente** (não dentro do Git):
 
-`~/private/adm_portifolio/public-build/`
+`~/domains/maiconoliveiradev.com.br/private/adm_portifolio/public-build/`
 
 (O script liga `public/build` → essa pasta automaticamente.)
 
@@ -208,7 +208,7 @@ No servidor, use **`deploy-hostinger.sh`** (só PHP + Composer):
 
 ```bash
 cd ~/domains/SEU_DOMINIO/public_html/adm_portifolio/apps/api
-export PORTFOLIO_PERSISTENT_DIR=$HOME/private/adm_portifolio
+export PORTFOLIO_PERSISTENT_DIR=$HOME/domains/maiconoliveiradev.com.br/private/adm_portifolio
 chmod +x scripts/deploy-hostinger.sh
 ./scripts/deploy-hostinger.sh
 ```
@@ -216,7 +216,7 @@ chmod +x scripts/deploy-hostinger.sh
 **Comando pós-deploy no hPanel (Git):**
 
 ```bash
-cd ~/domains/SEU_DOMINIO/public_html/adm_portifolio/apps/api && export PORTFOLIO_PERSISTENT_DIR=$HOME/private/adm_portifolio && bash scripts/deploy-hostinger.sh
+cd ~/domains/SEU_DOMINIO/public_html/adm_portifolio/apps/api && export PORTFOLIO_PERSISTENT_DIR=$HOME/domains/maiconoliveiradev.com.br/private/adm_portifolio && bash scripts/deploy-hostinger.sh
 ```
 
 > Sempre que mudar CSS/JS do admin: `npm run build` local → reenviar `public/build/`.
@@ -249,9 +249,9 @@ Login: `ADMIN_EMAIL` + `ADMIN_PASSWORD` do `.env`.
 
 | Sintoma | Solução |
 |---------|---------|
-| Tudo “reseta” a cada commit na main | `.env` em `~/private/adm_portifolio/` + pós-deploy com `deploy-hostinger.sh` |
-| 500 após deploy | Conferir `~/private/adm_portifolio/.env`; rodar `deploy-hostinger.sh` |
-| CSS/JS admin quebrado | Upload build em `~/private/adm_portifolio/public-build/` |
+| Tudo “reseta” a cada commit na main | `.env` em `~/domains/maiconoliveiradev.com.br/private/adm_portifolio/` + pós-deploy com `deploy-hostinger.sh` |
+| 500 após deploy | Conferir `~/domains/maiconoliveiradev.com.br/private/adm_portifolio/.env`; rodar `deploy-hostinger.sh` |
+| CSS/JS admin quebrado | Upload build em `~/domains/maiconoliveiradev.com.br/private/adm_portifolio/public-build/` |
 | Imagens 404 | `php artisan storage:link` |
 | Erro de banco | Conferir `DB_*` no hPanel MySQL |
 | HTTPS redireciona errado | `APP_URL` com `https://`; `trustProxies` já configurado |

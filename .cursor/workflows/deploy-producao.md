@@ -9,7 +9,7 @@ Front (Vercel) e back (Hostinger) no ar. Este guia evita que push na `main` desc
 | App | Onde | Deploy | Config persiste em |
 |-----|------|--------|-------------------|
 | Site Next.js | Vercel | automático (Git `main`) | Painel Vercel → Environment Variables |
-| API + Admin | Hostinger | Git `main` + script pós-deploy | `~/private/adm_portifolio/` (fora do Git) |
+| API + Admin | Hostinger | Git `main` + script pós-deploy | `~/domains/maiconoliveiradev.com.br/private/adm_portifolio/` |
 
 ```
 push main
@@ -25,16 +25,16 @@ push main
 ### 1. Pasta persistente (SSH)
 
 ```bash
-mkdir -p ~/private/adm_portifolio/public-build
-mkdir -p ~/private/adm_portifolio/storage-app-public
-chmod 700 ~/private/adm_portifolio
+mkdir -p ~/domains/maiconoliveiradev.com.br/private/adm_portifolio/public-build
+mkdir -p ~/domains/maiconoliveiradev.com.br/private/adm_portifolio/storage-app-public
+chmod 700 ~/domains/maiconoliveiradev.com.br/private/adm_portifolio
 ```
 
 `.env` de produção **só** aqui:
 
 ```bash
-nano ~/private/adm_portifolio/.env
-chmod 600 ~/private/adm_portifolio/.env
+nano ~/domains/maiconoliveiradev.com.br/private/adm_portifolio/.env
+chmod 600 ~/domains/maiconoliveiradev.com.br/private/adm_portifolio/.env
 ```
 
 ### 2. Build do admin (upload uma vez; depois só se mudar CSS/JS)
@@ -47,7 +47,7 @@ cd apps/api && npm ci && npm run build
 
 Envie o conteúdo de `apps/api/public/build/` para:
 
-`~/private/adm_portifolio/public-build/`
+`~/domains/maiconoliveiradev.com.br/private/adm_portifolio/public-build/`
 
 (O script cria symlink `public/build` → essa pasta.)
 
@@ -56,7 +56,7 @@ Envie o conteúdo de `apps/api/public/build/` para:
 hPanel → **Git** → repositório → **Comandos de implantação**:
 
 ```bash
-cd $HOME/domains/maiconoliveiradev.com.br/public_html/adm_portifolio/apps/api && export PORTFOLIO_PERSISTENT_DIR=$HOME/private/adm_portifolio && bash scripts/deploy-hostinger.sh
+cd $HOME/domains/maiconoliveiradev.com.br/public_html/adm_portifolio/apps/api && export PORTFOLIO_PERSISTENT_DIR=$HOME/domains/maiconoliveiradev.com.br/private/adm_portifolio && bash scripts/deploy-hostinger.sh
 ```
 
 Sem isso, cada push **só troca código** e quebra `vendor`, `.env` e assets.
@@ -96,7 +96,7 @@ source ~/.bashrc
 ## Quando mudar só o admin (CSS/JS)
 
 1. Local: `cd apps/api && npm run build`
-2. Upload para `~/private/adm_portifolio/public-build/`
+2. Upload para `~/domains/maiconoliveiradev.com.br/private/adm_portifolio/public-build/`
 3. Push na `main` (se houver código) — o script não apaga o build persistente
 
 ---
@@ -131,7 +131,7 @@ Deploy automático na `main` é seguro — variáveis ficam no painel, não no r
 |---------|-------|------|
 | 500 após push | Sem pós-deploy ou `.env` sumiu | Rodar `deploy-hostinger.sh`; conferir `~/private/adm_portifolio/.env` |
 | Composer PHP 8.1 | SSH usa PHP da conta | `/opt/alt/php83/usr/bin/php /usr/local/bin/composer install --no-dev` |
-| Admin sem estilo | `public-build` vazio | Upload build para `~/private/adm_portifolio/public-build/` |
+| Admin sem estilo | `public-build` vazio | Upload build para `~/domains/maiconoliveiradev.com.br/private/adm_portifolio/public-build/` |
 | Imagens 404 | Symlink storage | Rodar `deploy-hostinger.sh` |
 
 ---

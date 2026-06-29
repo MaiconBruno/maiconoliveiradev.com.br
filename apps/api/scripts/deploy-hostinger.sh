@@ -37,7 +37,21 @@ if [ -z "$COMPOSER_BIN" ]; then
   COMPOSER_BIN="$PHP_BIN $(command -v composer)"
 fi
 
-PERSISTENT_DIR="${PORTFOLIO_PERSISTENT_DIR:-$HOME/private/adm_portifolio}"
+# Hostinger: pasta "private" do hPanel fica em domains/.../private/, não em ~/private/
+if [ -z "${PORTFOLIO_PERSISTENT_DIR:-}" ]; then
+  for candidate in \
+    "$HOME/domains/maiconoliveiradev.com.br/private/adm_portifolio" \
+    "$HOME/private/adm_portifolio"; do
+    if [ -d "$candidate" ] || [ -f "$candidate/.env" ]; then
+      PERSISTENT_DIR="$candidate"
+      break
+    fi
+  done
+  PERSISTENT_DIR="${PERSISTENT_DIR:-$HOME/domains/maiconoliveiradev.com.br/private/adm_portifolio}"
+else
+  PERSISTENT_DIR="$PORTFOLIO_PERSISTENT_DIR"
+fi
+echo "→ persistente: $PERSISTENT_DIR"
 PERSISTENT_ENV="${PORTFOLIO_PERSISTENT_ENV:-$PERSISTENT_DIR/.env}"
 PERSISTENT_STORAGE="${PORTFOLIO_PERSISTENT_STORAGE:-$PERSISTENT_DIR/storage-app-public}"
 PERSISTENT_BUILD="${PORTFOLIO_PERSISTENT_BUILD:-$PERSISTENT_DIR/public-build}"
