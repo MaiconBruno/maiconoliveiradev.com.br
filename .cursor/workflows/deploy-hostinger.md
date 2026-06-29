@@ -108,25 +108,30 @@ O Git da Hostinger **substitui o diretório de deploy** pelo conteúdo do reposi
 | `storage/app/public/` | Não | uploads apagados |
 | MySQL | Fora do repo | **não** é apagado (só o código) |
 
-**Solução:** guardar config e uploads **fora** da pasta clonada pelo Git + rodar `deploy.sh` após cada pull.
+**Solução:** guardar config, uploads e build **fora** da pasta clonada pelo Git + rodar `deploy-hostinger.sh` após cada pull.
+
+> Guia de produção (front + back no ar): [deploy-producao.md](./deploy-producao.md)
 
 ### Uma vez no servidor (SSH)
 
 ```bash
-mkdir -p ~/private/portfolio-api
-cp ~/PORTIFOLIO/apps/api/.env.example ~/private/portfolio-api/.env
-nano ~/private/portfolio-api/.env    # preencher DB, ADMIN_PASSWORD, DEEPL, SMTP...
-chmod 600 ~/private/portfolio-api/.env
+mkdir -p ~/private/adm_portifolio/public-build
+mkdir -p ~/private/adm_portifolio/storage-app-public
+nano ~/private/adm_portifolio/.env    # preencher DB, ADMIN_PASSWORD, DEEPL, SMTP...
+chmod 600 ~/private/adm_portifolio/.env
 ```
 
-O `deploy.sh` cria symlink `apps/api/.env` → `~/private/portfolio-api/.env` e mantém uploads em `~/private/portfolio-api/storage-app-public`.
+O `deploy-hostinger.sh` cria symlinks:
+- `.env` → `~/private/adm_portifolio/.env`
+- `storage/app/public` → `~/private/adm_portifolio/storage-app-public`
+- `public/build` → `~/private/adm_portifolio/public-build`
 
 ### Comando pós-deploy no hPanel
 
-hPanel → **Git** → repositório → **Comandos de implantação** (ou equivalente):
+hPanel → **Git** → repositório → **Comandos de implantação**:
 
 ```bash
-cd ~/domains/SEU_DOMINIO/public_html/adm_portifolio/apps/api && export PORTFOLIO_PERSISTENT_DIR=$HOME/private/adm_portifolio && bash scripts/deploy-hostinger.sh
+cd $HOME/domains/maiconoliveiradev.com.br/public_html/adm_portifolio/apps/api && export PORTFOLIO_PERSISTENT_DIR=$HOME/private/adm_portifolio && bash scripts/deploy-hostinger.sh
 ```
 
 Sem esse comando, cada push só atualiza o código e **não** reinstala dependências nem restaura o `.env`.
@@ -135,7 +140,7 @@ Sem esse comando, cada push só atualiza o código e **não** reinstala dependê
 
 ## Fase 4 — `.env` de produção
 
-Criar **`~/private/portfolio-api/.env`** (não dentro de `PORTIFOLIO/`) a partir de `apps/api/.env.example`:
+Criar **`~/private/adm_portifolio/.env`** (não dentro de `adm_portifolio/`) a partir de `apps/api/.env.example`:
 
 ```env
 APP_NAME="Portfolio Admin"
@@ -193,8 +198,11 @@ cd apps/api
 npm ci && npm run build
 ```
 
-Envie a pasta `apps/api/public/build/` para o servidor (Gerenciador de arquivos ou SFTP), em:
-`public_html/adm_portifolio/apps/api/public/build/`
+Envie o build para a pasta **persistente** (não dentro do Git):
+
+`~/private/adm_portifolio/public-build/`
+
+(O script liga `public/build` → essa pasta automaticamente.)
 
 No servidor, use **`deploy-hostinger.sh`** (só PHP + Composer):
 
@@ -241,9 +249,9 @@ Login: `ADMIN_EMAIL` + `ADMIN_PASSWORD` do `.env`.
 
 | Sintoma | Solução |
 |---------|---------|
-| Tudo “reseta” a cada commit na main | `.env` em `~/private/portfolio-api/` + comando pós-deploy com `deploy.sh` |
-| 500 após deploy | `APP_KEY` vazio → conferir `~/private/portfolio-api/.env`; rodar `deploy.sh` |
-| CSS/JS admin quebrado | `npm run build` → pasta `public/build` |
+| Tudo “reseta” a cada commit na main | `.env` em `~/private/adm_portifolio/` + pós-deploy com `deploy-hostinger.sh` |
+| 500 após deploy | Conferir `~/private/adm_portifolio/.env`; rodar `deploy-hostinger.sh` |
+| CSS/JS admin quebrado | Upload build em `~/private/adm_portifolio/public-build/` |
 | Imagens 404 | `php artisan storage:link` |
 | Erro de banco | Conferir `DB_*` no hPanel MySQL |
 | HTTPS redireciona errado | `APP_URL` com `https://`; `trustProxies` já configurado |
