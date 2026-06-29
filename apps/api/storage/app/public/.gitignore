@@ -1,0 +1,9 @@
+*
+!*/
+!.gitignore
+!projects/
+!profile/
+!seo/
+!projects/.gitkeep
+!profile/.gitkeep
+!seo/.gitkeep

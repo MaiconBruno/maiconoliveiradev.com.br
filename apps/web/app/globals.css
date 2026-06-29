@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+:root {
+  --background: #09090b;
+  --background-elevated: #18181b;
+  --foreground: #fafafa;
+  --foreground-muted: #a1a1aa;
+  --border: #27272a;
+  --accent: #f97316;
+  --accent-hover: #ea580c;
+  --accent-soft: #fb923c;
+  --accent-muted: rgba(249, 115, 22, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-elevated: var(--background-elevated);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Markdown prose — dark theme */
+.prose {
+  color: #d4d4d8;
+  line-height: 1.75;
+}
+
+.prose :where(p):not(:where([class~="not-prose"] *)) {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.prose :where(h2):not(:where([class~="not-prose"] *)) {
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fafafa;
+}
+
+.prose :where(h3):not(:where([class~="not-prose"] *)) {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #fafafa;
+}
+
+.prose :where(ul):not(:where([class~="not-prose"] *)) {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+  list-style-type: disc;
+}
+
+.prose :where(ol):not(:where([class~="not-prose"] *)) {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+  list-style-type: decimal;
+}
+
+.prose :where(li):not(:where([class~="not-prose"] *)) {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+.prose :where(strong):not(:where([class~="not-prose"] *)) {
+  color: #fafafa;
+  font-weight: 600;
+}
+
+.prose :where(code):not(:where([class~="not-prose"] *)) {
+  border-radius: 0.25rem;
+  background: #27272a;
+  padding: 0.125rem 0.375rem;
+  font-size: 0.875em;
+  font-family: var(--font-geist-mono), monospace;
+  color: #fb923c;
+}
+
+.prose :where(blockquote):not(:where([class~="not-prose"] *)) {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  border-left: 3px solid #f97316;
+  padding-left: 1em;
+  color: #a1a1aa;
+  font-style: italic;
+}
+
+.prose-invert {
+  --tw-prose-body: #d4d4d8;
+  --tw-prose-headings: #fafafa;
+}

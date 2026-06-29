@@ -1,0 +1,43 @@
+{
+  "nav": {
+    "projects": "Projetos",
+    "about": "Sobre",
+    "contact": "Contato"
+  },
+  "hero": {
+    "viewProjects": "Ver projetos",
+    "contact": "Fale comigo"
+  },
+  "sections": {
+    "featuredProjects": "Projetos em destaque",
+    "experiences": "Experiências",
+    "skills": "Skills",
+    "viewAll": "Ver todas",
+    "social": "Redes sociais"
+  },
+  "contact": {
+    "title": "Contato",
+    "subtitle": "Envie uma mensagem ou conecte-se pelas redes.",
+    "name": "Nome",
+    "email": "E-mail",
+    "subject": "Assunto",
+    "message": "Mensagem",
+    "send": "Enviar mensagem",
+    "success": "Mensagem enviada com sucesso!",
+    "error": "Erro ao enviar. Tente novamente."
+  },
+  "about": {
+    "title": "Sobre",
+    "experience": "Experiência",
+    "education": "Formação",
+    "certifications": "Certificações"
+  },
+  "projects": {
+    "title": "Projetos",
+    "viewCase": "Ver case",
+    "empty": "Nenhum projeto publicado ainda."
+  },
+  "footer": {
+    "rights": "Todos os direitos reservados."
+  }
+}

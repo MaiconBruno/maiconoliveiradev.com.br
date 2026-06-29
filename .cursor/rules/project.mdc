@@ -1,0 +1,26 @@
+---
+description: Contexto e regras do portfólio MAICONOLIVEIRADEV — monorepo Next.js + Laravel
+alwaysApply: true
+---
+
+# Portfólio MAICONOLIVEIRADEV
+
+Antes de implementar, carregar documentação em `.cursor/`:
+
+1. `memory/project.md` — objetivo e arquitetura
+2. `skills/stack/instructions.md` — stack e monorepo
+3. `docs/readiness-checklist.md` — escopo v1
+4. `portfolio-data.md` — fonte mestre; **não fabricar** métricas ou fatos
+
+## Stack
+
+- `apps/web` — Next.js 15 → Vercel → `maiconoliveiradev.com.br`
+- `apps/api` — Laravel 12 → Hostinger → `admin.maiconoliveiradev.com.br`
+- MySQL, Inertia+React admin, API `/api/v1/*`
+
+## Regras
+
+- Não sobrescrever pasta de site gerada sem confirmação
+- Conteúdo bilíngue: JSON `{ pt, en }`; DeepL no admin
+- Imagens: `storage/app/public` no Laravel
+- Seguir `docs/design-system.md` (dark + laranja)

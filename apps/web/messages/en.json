@@ -1,0 +1,43 @@
+{
+  "nav": {
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "viewProjects": "View projects",
+    "contact": "Get in touch"
+  },
+  "sections": {
+    "featuredProjects": "Featured projects",
+    "experiences": "Experience",
+    "skills": "Skills",
+    "viewAll": "View all",
+    "social": "Social links"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Send a message or connect on social media.",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send message",
+    "success": "Message sent successfully!",
+    "error": "Failed to send. Please try again."
+  },
+  "about": {
+    "title": "About",
+    "experience": "Experience",
+    "education": "Education",
+    "certifications": "Certifications"
+  },
+  "projects": {
+    "title": "Projects",
+    "viewCase": "View case study",
+    "empty": "No published projects yet."
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  }
+}
