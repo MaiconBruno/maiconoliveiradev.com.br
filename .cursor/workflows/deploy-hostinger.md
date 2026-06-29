@@ -85,9 +85,46 @@ git push -u origin main
 
 ---
 
+## ⚠ Auto-deploy apaga arquivos locais
+
+O Git da Hostinger **substitui o diretório de deploy** pelo conteúdo do repositório a cada push na `main`. Isso remove tudo que **não está no Git**:
+
+| Arquivo/pasta | No Git? | O que acontece |
+|---------------|---------|----------------|
+| `.env` | Não | some → 500, perde `APP_KEY`, senhas |
+| `vendor/` | Não | some → precisa `composer install` |
+| `public/build/` | Não | some → admin sem CSS/JS |
+| `storage/app/public/` | Não | uploads apagados |
+| MySQL | Fora do repo | **não** é apagado (só o código) |
+
+**Solução:** guardar config e uploads **fora** da pasta clonada pelo Git + rodar `deploy.sh` após cada pull.
+
+### Uma vez no servidor (SSH)
+
+```bash
+mkdir -p ~/private/portfolio-api
+cp ~/PORTIFOLIO/apps/api/.env.example ~/private/portfolio-api/.env
+nano ~/private/portfolio-api/.env    # preencher DB, ADMIN_PASSWORD, DEEPL, SMTP...
+chmod 600 ~/private/portfolio-api/.env
+```
+
+O `deploy.sh` cria symlink `apps/api/.env` → `~/private/portfolio-api/.env` e mantém uploads em `~/private/portfolio-api/storage-app-public`.
+
+### Comando pós-deploy no hPanel
+
+hPanel → **Git** → repositório → **Comandos de implantação** (ou equivalente):
+
+```bash
+cd ~/domains/SEU_DOMINIO/public_html/adm_portifolio/apps/api && export PORTFOLIO_PERSISTENT_DIR=$HOME/private/adm_portifolio && bash scripts/deploy-hostinger.sh
+```
+
+Sem esse comando, cada push só atualiza o código e **não** reinstala dependências nem restaura o `.env`.
+
+---
+
 ## Fase 4 — `.env` de produção
 
-No servidor (SSH ou Gerenciador de arquivos), criar `apps/api/.env` a partir de `apps/api/.env.example`:
+Criar **`~/private/portfolio-api/.env`** (não dentro de `PORTIFOLIO/`) a partir de `apps/api/.env.example`:
 
 ```env
 APP_NAME="Portfolio Admin"
@@ -135,6 +172,38 @@ FILESYSTEM_DISK=public
 
 ## Fase 5 — Comandos no servidor (SSH)
 
+### Hostinger compartilhado (sem Node/npm)
+
+O admin Inertia usa Vite. **Build na sua máquina**, upload manual de `public/build/`:
+
+```bash
+# Na sua máquina
+cd apps/api
+npm ci && npm run build
+```
+
+Envie a pasta `apps/api/public/build/` para o servidor (Gerenciador de arquivos ou SFTP), em:
+`public_html/adm_portifolio/apps/api/public/build/`
+
+No servidor, use **`deploy-hostinger.sh`** (só PHP + Composer):
+
+```bash
+cd ~/domains/SEU_DOMINIO/public_html/adm_portifolio/apps/api
+export PORTFOLIO_PERSISTENT_DIR=$HOME/private/adm_portifolio
+chmod +x scripts/deploy-hostinger.sh
+./scripts/deploy-hostinger.sh
+```
+
+**Comando pós-deploy no hPanel (Git):**
+
+```bash
+cd ~/domains/SEU_DOMINIO/public_html/adm_portifolio/apps/api && export PORTFOLIO_PERSISTENT_DIR=$HOME/private/adm_portifolio && bash scripts/deploy-hostinger.sh
+```
+
+> Sempre que mudar CSS/JS do admin: `npm run build` local → reenviar `public/build/`.
+
+### Script completo (se o servidor tiver npm)
+
 ```bash
 cd ~/PORTIFOLIO/apps/api
 chmod +x scripts/deploy.sh
@@ -142,17 +211,6 @@ chmod +x scripts/deploy.sh
 # Primeiro deploy (migra + seed)
 PORTFOLIO_SEED_ON_DEPLOY=true ./scripts/deploy.sh
 ```
-
-Se `npm` não estiver disponível no Hostinger, build local e envie `public/build`:
-
-```bash
-# Na sua máquina local
-cd apps/api
-npm ci && npm run build
-# Commitar public/build só se necessário, ou enviar via SFTP
-```
-
-Depois, no servidor, rode o deploy sem depender do npm (comentar linhas npm no script ou rodar manualmente as etapas PHP).
 
 ---
 
@@ -172,7 +230,8 @@ Login: `ADMIN_EMAIL` + `ADMIN_PASSWORD` do `.env`.
 
 | Sintoma | Solução |
 |---------|---------|
-| 500 após deploy | `APP_KEY` vazio → `php artisan key:generate` |
+| Tudo “reseta” a cada commit na main | `.env` em `~/private/portfolio-api/` + comando pós-deploy com `deploy.sh` |
+| 500 após deploy | `APP_KEY` vazio → conferir `~/private/portfolio-api/.env`; rodar `deploy.sh` |
 | CSS/JS admin quebrado | `npm run build` → pasta `public/build` |
 | Imagens 404 | `php artisan storage:link` |
 | Erro de banco | Conferir `DB_*` no hPanel MySQL |

@@ -5,14 +5,27 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function getApiBaseUrl(): string {
-  return typeof window === 'undefined'
-    ? (process.env.API_INTERNAL_URL ?? process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000')
-    : (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000');
+function ensureUrlProtocol(raw: string): string {
+  const trimmed = raw.replace(/\/$/, '');
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed;
+  }
+  const useHttp = /^(localhost|127\.0\.0\.1|api)(:|$)/i.test(trimmed);
+  return `${useHttp ? 'http' : 'https'}://${trimmed}`;
 }
 
 export function getSiteUrl(): string {
-  return process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000';
+  return ensureUrlProtocol(process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000');
+}
+
+export function getApiBaseUrl(): string {
+  const fallback = 'http://localhost:8000';
+  const raw =
+    typeof window === 'undefined'
+      ? (process.env.API_INTERNAL_URL ?? process.env.NEXT_PUBLIC_API_URL ?? fallback)
+      : (process.env.NEXT_PUBLIC_API_URL ?? fallback);
+
+  return ensureUrlProtocol(raw);
 }
 
 export async function fetchApi<T>(
