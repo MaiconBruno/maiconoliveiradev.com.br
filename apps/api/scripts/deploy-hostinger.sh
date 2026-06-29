@@ -5,6 +5,41 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
+# SSH usa PHP da conta (geralmente 8.1); web usa .htaccess em public/
+PHP_BIN=""
+for candidate in php83 /usr/bin/php83 /opt/alt/php83/usr/bin/php; do
+  if command -v "$candidate" >/dev/null 2>&1 && "$candidate" -r 'exit(version_compare(PHP_VERSION, "8.2.0", ">=") ? 0 : 1);' 2>/dev/null; then
+    PHP_BIN="$candidate"
+    break
+  fi
+  if [ -x "$candidate" ] && "$candidate" -r 'exit(version_compare(PHP_VERSION, "8.2.0", ">=") ? 0 : 1);' 2>/dev/null; then
+    PHP_BIN="$candidate"
+    break
+  fi
+done
+
+if [ -z "$PHP_BIN" ]; then
+  echo "✗ PHP 8.2+ não encontrado no SSH (php -v mostra $(php -r 'echo PHP_VERSION;' 2>/dev/null || echo '?'))."
+  echo "  Rode na Hostinger:"
+  echo "    /opt/alt/php83/usr/bin/php -v"
+  echo "  Se funcionar, use sempre:"
+  echo "    /opt/alt/php83/usr/bin/php /usr/local/bin/composer install --no-dev --optimize-autoloader"
+  exit 1
+fi
+
+echo "→ PHP CLI: $($PHP_BIN -v | head -1)"
+
+COMPOSER_BIN=""
+for composer_path in /usr/local/bin/composer /usr/bin/composer composer.phar; do
+  if [ -f "$composer_path" ]; then
+    COMPOSER_BIN="$PHP_BIN $composer_path"
+    break
+  fi
+done
+if [ -z "$COMPOSER_BIN" ]; then
+  COMPOSER_BIN="$PHP_BIN $(command -v composer)"
+fi
+
 PERSISTENT_DIR="${PORTFOLIO_PERSISTENT_DIR:-$HOME/private/adm_portifolio}"
 PERSISTENT_ENV="${PORTFOLIO_PERSISTENT_ENV:-$PERSISTENT_DIR/.env}"
 PERSISTENT_STORAGE="${PORTFOLIO_PERSISTENT_STORAGE:-$PERSISTENT_DIR/storage-app-public}"
@@ -43,27 +78,27 @@ fi
 
 if ! grep -q '^APP_KEY=base64:' .env 2>/dev/null; then
   echo "→ gerar APP_KEY"
-  php artisan key:generate --force
+  $PHP_BIN artisan key:generate --force
 fi
 
 echo "→ composer install (production)"
-composer install --no-dev --optimize-autoloader
+$COMPOSER_BIN install --no-dev --optimize-autoloader
 
 echo "→ migrations"
-php artisan migrate --force
+$PHP_BIN artisan migrate --force
 
 if [ "${PORTFOLIO_SEED_ON_DEPLOY:-false}" = "true" ]; then
   echo "→ seed (primeiro deploy)"
-  php artisan db:seed --force
+  $PHP_BIN artisan db:seed --force
 fi
 
 echo "→ storage link"
-php artisan storage:link 2>/dev/null || true
+$PHP_BIN artisan storage:link 2>/dev/null || true
 
 echo "→ cache"
-php artisan config:clear
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+$PHP_BIN artisan config:clear
+$PHP_BIN artisan config:cache
+$PHP_BIN artisan route:cache
+$PHP_BIN artisan view:cache
 
 echo "✓ Deploy Hostinger concluído (sem npm)"

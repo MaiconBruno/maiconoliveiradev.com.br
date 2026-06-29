@@ -48,6 +48,17 @@ GitHub  →  hPanel (Git)  →  ~/.../PORTIFOLIO/apps/api
 2. Versão **8.3** (mínimo 8.2)
 3. Extensões necessárias: `pdo_mysql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `fileinfo`, `bcmath`
 
+**Importante (Hostinger):**
+- `php -v` no **SSH** mostra o PHP **da conta** (muitas vezes 8.1), não o do site.
+- O **site** usa o `.htaccess` em `apps/api/public/` (já fixa `application/x-lsphp83` no repo).
+- Para **Composer/artisan** no SSH, use `php83` ou adicione ao `~/.bashrc`:
+  ```bash
+  echo 'export PATH="/opt/alt/php83/usr/bin:$PATH"' >> ~/.bashrc
+  source ~/.bashrc
+  php -v   # deve mostrar 8.3
+  ```
+- Se o hPanel “volta” para 8.1 após deploy Git, o `.htaccess` em `public/` mantém 8.3 no Apache.
+
 ### 1.4 DNS (só `admin` por agora)
 
 | Registro | Nome | Destino |
