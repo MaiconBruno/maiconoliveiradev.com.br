@@ -2,12 +2,45 @@ import Link from 'next/link';
 import { ReactNode } from 'react';
 import { FadeIn } from '@/components/FadeIn';
 
+type ChapterAction = {
+  href: string;
+  label: string;
+  external?: boolean;
+  download?: boolean;
+};
+
+function ChapterActionLink({ action }: { action: ChapterAction }) {
+  const className =
+    'relative shrink-0 font-mono text-xs uppercase tracking-wider text-orange-400 transition hover:text-orange-300';
+
+  if (action.external) {
+    return (
+      <a
+        href={action.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        {...(action.download ? { download: true } : {})}
+        className={className}
+      >
+        {action.label} →
+      </a>
+    );
+  }
+
+  return (
+    <Link href={action.href} className={className}>
+      {action.label} →
+    </Link>
+  );
+}
+
 export function ChapterSection({
   id,
   chapter,
   eyebrow,
   title,
   action,
+  secondaryAction,
   children,
   fullBleed = false,
   className = '',
@@ -16,7 +49,8 @@ export function ChapterSection({
   chapter: string;
   eyebrow: string;
   title: string;
-  action?: { href: string; label: string };
+  action?: ChapterAction;
+  secondaryAction?: ChapterAction;
   children: ReactNode;
   fullBleed?: boolean;
   className?: string;
@@ -38,13 +72,11 @@ export function ChapterSection({
             {title}
           </h2>
         </div>
-        {action && (
-          <Link
-            href={action.href}
-            className="relative shrink-0 font-mono text-xs uppercase tracking-wider text-orange-400 transition hover:text-orange-300"
-          >
-            {action.label} →
-          </Link>
+        {(action || secondaryAction) && (
+          <div className="relative flex shrink-0 flex-col items-end gap-2 sm:flex-row sm:items-center sm:gap-5">
+            {secondaryAction && <ChapterActionLink action={secondaryAction} />}
+            {action && <ChapterActionLink action={action} />}
+          </div>
         )}
       </FadeIn>
       {children}

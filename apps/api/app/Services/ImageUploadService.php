@@ -16,20 +16,22 @@ class ImageUploadService
     private const MAX_SIZE_KB = 5120;
 
     /**
-     * @return array{path: string, url: string}
+     * @return array{path: string, url: string, type: 'image'|'video'}
      */
-    public function store(UploadedFile $file, string $folder): array
+    public function store(UploadedFile $file, string $folder, bool $allowVideo = false): array
     {
         $this->assertAllowedFolder($folder);
-        $this->validateFile($file);
+        $type = $this->resolveMediaType($file, $allowVideo);
+        $this->validateFile($file, $type);
 
-        $extension = $file->guessExtension() ?: $file->getClientOriginalExtension() ?: 'jpg';
+        $extension = $file->guessExtension() ?: $file->getClientOriginalExtension() ?: ($type === 'video' ? 'mp4' : 'jpg');
         $filename = Str::uuid().'.'.strtolower($extension);
         $path = $file->storeAs($folder, $filename, 'public');
 
         return [
             'path' => $path,
             'url' => $this->publicUrl($path) ?? '',
+            'type' => $type,
         ];
     }
 
@@ -68,11 +70,37 @@ class ImageUploadService
         }
     }
 
+    private function resolveMediaType(UploadedFile $file, bool $allowVideo): string
+    {
+        $mime = (string) $file->getMimeType();
+
+        if ($allowVideo && str_starts_with($mime, 'video/')) {
+            return 'video';
+        }
+
+        return 'image';
+    }
+
     /**
      * @throws ValidationException
      */
-    private function validateFile(UploadedFile $file): void
+    private function validateFile(UploadedFile $file, string $type): void
     {
+        if ($type === 'video') {
+            Validator::make(
+                ['file' => $file],
+                [
+                    'file' => ['required', 'file', 'mimes:mp4,webm,mov', 'max:51200'],
+                ],
+                [
+                    'file.mimes' => 'Formatos permitidos: MP4, WebM ou MOV.',
+                    'file.max' => 'O vídeo deve ter no máximo 50 MB.',
+                ]
+            )->validate();
+
+            return;
+        }
+
         Validator::make(
             ['file' => $file],
             [

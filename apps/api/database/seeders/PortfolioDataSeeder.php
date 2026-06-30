@@ -98,7 +98,19 @@ class PortfolioDataSeeder extends Seeder
             ],
             [
                 'empresa' => 'DGAZ Marketing',
-                'cargo' => Locale::pt('Desenvolvedor Full Stack (Pleno → Jr)'),
+                'cargo' => Locale::pt('Desenvolvedor Full Stack'),
+                'progressao' => [
+                    [
+                        'cargo' => Locale::pt('Desenvolvedor Full Stack Jr'),
+                        'periodo_inicio' => '2019-10',
+                        'periodo_fim' => '2021-01',
+                    ],
+                    [
+                        'cargo' => Locale::pt('Desenvolvedor Full Stack Pleno'),
+                        'periodo_inicio' => '2021-02',
+                        'periodo_fim' => '2025-06',
+                    ],
+                ],
                 'periodo_inicio' => '2019-10',
                 'periodo_fim' => '2025-06',
                 'modelo' => 'remoto',

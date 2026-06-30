@@ -2,7 +2,8 @@ import { FormEvent } from 'react';
 import { Link, useForm } from '@inertiajs/react';
 import BilingualField from '../../../Components/BilingualField';
 import GenerateAllEnButton from '../../../Components/GenerateAllEnButton';
-import ImageGalleryUpload from '../../../Components/ImageGalleryUpload';
+import ImageUpload from '../../../Components/ImageUpload';
+import MediaGalleryUpload from '../../../Components/MediaGalleryUpload';
 import TagInput from '../../../Components/TagInput';
 import {
     emptyBilingual,
@@ -34,12 +35,11 @@ export default function ProjectForm({
 
     const submit = (e: FormEvent) => {
         e.preventDefault();
-        const options = { forceFormData: data.imagens_upload.length > 0 };
 
         if (isEdit && project) {
-            put(`/admin/projects/${project.id}`, options);
+            put(`/admin/projects/${project.id}`);
         } else {
-            post('/admin/projects', options);
+            post('/admin/projects');
         }
     };
 
@@ -382,11 +382,16 @@ export default function ProjectForm({
                     </div>
                 </div>
 
-                <ImageGalleryUpload
-                    existing={data.imagens_existentes}
-                    uploads={data.imagens_upload}
-                    onExistingChange={(paths) => setData('imagens_existentes', paths)}
-                    onUploadsChange={(files) => setData('imagens_upload', files)}
+                <ImageUpload
+                    label="Imagem destaque"
+                    value={data.imagens_existentes[0] ?? null}
+                    onChange={(path) => setData('imagens_existentes', path ? [path] : [])}
+                    folder="projects"
+                />
+
+                <MediaGalleryUpload
+                    existing={data.galeria_existentes}
+                    onExistingChange={(items) => setData('galeria_existentes', items)}
                 />
             </section>
 

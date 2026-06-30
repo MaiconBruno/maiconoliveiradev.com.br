@@ -1,13 +1,16 @@
 # Task 01 — Admin: CRUD Projetos (completo)
 
 **ID do agente:** `admin-projects-crud`  
+**Status:** ✅ Concluída (2026-06-30) — inclui galeria image/video  
 **Prioridade:** Alta — define o padrão para os outros módulos admin
 
 ---
 
 ## Objetivo
 
-Implementar CRUD **funcional** de Projetos no painel Laravel/Inertia. Hoje `store`, `update` e `destroy` são stub e os formulários não salvam.
+Implementar CRUD **funcional** de Projetos no painel Laravel/Inertia.
+
+> **Nota (2026-06-30):** Esta task foi concluída. Use como referência de padrão para novos módulos.
 
 ## Leitura obrigatória
 

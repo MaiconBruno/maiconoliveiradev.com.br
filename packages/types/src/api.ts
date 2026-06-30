@@ -25,6 +25,25 @@ export type Metrica = {
   valor: string;
 };
 
+export type GalleryMediaType = 'image' | 'video';
+
+export type GalleryMedia = {
+  path: string;
+  type: GalleryMediaType;
+};
+
+export type ProgressaoRaw = {
+  cargo: LocalizedString;
+  periodo_inicio?: string | null;
+  periodo_fim?: string | null;
+};
+
+export type Progressao = {
+  cargo: string;
+  periodo_inicio?: string;
+  periodo_fim?: string;
+};
+
 export type ContactLink = {
   label: string;
   url: string;
@@ -71,6 +90,7 @@ export type ProjectRaw = {
   metricas?: MetricaRaw[] | null;
   destaques?: LocalizedString[] | null;
   imagens?: string[] | null;
+  galeria?: GalleryMedia[] | null;
   ordem?: number;
   destaque?: boolean;
   publicado_em?: string | null;
@@ -80,6 +100,7 @@ export type ExperienceRaw = {
   id: number;
   empresa: string;
   cargo: LocalizedString;
+  progressao?: ProgressaoRaw[] | null;
   periodo_inicio?: string | null;
   periodo_fim?: string | null;
   modelo?: string | null;
@@ -172,6 +193,7 @@ export type Project = {
   metricas?: Metrica[];
   destaques?: string[];
   imagens?: string[];
+  galeria?: GalleryMedia[];
   ordem?: number;
   destaque?: boolean;
   publicado_em?: string | null;
@@ -187,6 +209,7 @@ export type Experience = {
   id: number;
   empresa: string;
   cargo: string;
+  progressao?: Progressao[];
   periodo_inicio?: string;
   periodo_fim?: string;
   modelo?: string;

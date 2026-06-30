@@ -1,6 +1,7 @@
 # Task 13 — Site: imagens e polish visual
 
 **ID do agente:** `web-polish`  
+**Status:** ⚠️ Parcial (2026-06-30) — falta nav ativa, `html lang`, shadcn  
 **Depende de:** Task 10 (URLs `/storage/...`)
 
 ---

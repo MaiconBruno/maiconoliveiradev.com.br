@@ -1,6 +1,7 @@
 # Task 09 — Admin: i18n UI (tabs PT/EN + Gerar EN)
 
 **ID do agente:** `admin-i18n-ui`  
+**Status:** ✅ Concluída (2026-06-30)  
 **Depende de:** Tasks 01–08 (formulários admin existentes)
 
 ---

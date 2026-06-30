@@ -1,6 +1,7 @@
 # Task 03 — Admin: Experiências
 
 **ID do agente:** `admin-experiences`  
+**Status:** ✅ Concluída (2026-06-30) — inclui campo `progressao`  
 **Depende de:** Task 01 (padrão CRUD)
 
 ---

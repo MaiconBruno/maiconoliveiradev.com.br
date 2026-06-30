@@ -8,6 +8,11 @@ export interface ProjectMetric {
     valor: string;
 }
 
+export interface GalleryMediaItem {
+    path: string;
+    type: 'image' | 'video';
+}
+
 export interface ProjectFormData {
     slug: string;
     titulo: BilingualString;
@@ -22,6 +27,8 @@ export interface ProjectFormData {
     destaques: BilingualString[];
     imagens_existentes: string[];
     imagens_upload: File[];
+    galeria_existentes: GalleryMediaItem[];
+    galeria_upload: File[];
     ordem: number;
     destaque: boolean;
     publicado_em: string;
@@ -41,6 +48,7 @@ export interface ProjectRecord {
     metricas: ProjectMetric[] | null;
     destaques: BilingualString[] | null;
     imagens: string[] | null;
+    galeria: GalleryMediaItem[] | null;
     ordem: number;
     destaque: boolean;
     publicado_em: string | null;
@@ -62,6 +70,8 @@ export const emptyProjectForm = (): ProjectFormData => ({
     destaques: [],
     imagens_existentes: [],
     imagens_upload: [],
+    galeria_existentes: [],
+    galeria_upload: [],
     ordem: 0,
     destaque: false,
     publicado_em: '',
@@ -99,6 +109,8 @@ export const projectToForm = (project: ProjectRecord): ProjectFormData => ({
     })),
     imagens_existentes: project.imagens ?? [],
     imagens_upload: [],
+    galeria_existentes: project.galeria ?? [],
+    galeria_upload: [],
     ordem: project.ordem,
     destaque: project.destaque,
     publicado_em: project.publicado_em

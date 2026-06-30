@@ -16,7 +16,9 @@
 │       ├── database/
 │       └── composer.json
 ├── packages/
-│   └── types/               # (opcional) contratos API em TypeScript
+│   └── types/               # contratos API TypeScript (@portfolio/types)
+├── docker/                  # Dockerfiles (api, web)
+├── docker-compose.yml       # dev local: mysql + api + web
 ├── portfolio-data.md        # seed / bootstrap de conteúdo
 └── README.md
 ```

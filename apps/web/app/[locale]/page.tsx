@@ -7,9 +7,13 @@ import { HomeSectionNav } from '@/components/home/HomeSectionNav';
 import { ProjectsBento } from '@/components/home/ProjectsBento';
 import { ProofStrip } from '@/components/home/ProofStrip';
 import { SkillsManifest } from '@/components/home/SkillsManifest';
+import { JsonLd } from '@/components/JsonLd';
+import { buildPersonJsonLd } from '@/lib/json-ld';
 import { getSeoMetadata } from '@/lib/seo';
-import { fetchApi } from '@/lib/utils';
-import type { Contact, Experience, Profile, Project, SkillGroup } from '@portfolio/types';
+import { fetchApi, getSiteUrl } from '@/lib/utils';
+import type { Contact, Education, Experience, Profile, Project, SkillGroup } from '@portfolio/types';
+
+const HOME_EXPERIENCE_LIMIT = 3;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -20,13 +24,25 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const t = await getTranslations({ locale });
 
-  const [profile, projects, experiences, skills, contact] = await Promise.all([
+  const [profile, projects, allExperiences, skills, contact, education] = await Promise.all([
     fetchApi<Profile>('/profile', locale),
     fetchApi<Project[]>('/projects?featured=1', locale),
-    fetchApi<Experience[]>('/experiences?limit=3', locale),
+    fetchApi<Experience[]>('/experiences', locale),
     fetchApi<SkillGroup[]>('/skills', locale),
     fetchApi<Contact>('/contact', locale),
+    fetchApi<Education[]>('/education', locale),
   ]);
+
+  const experiences = allExperiences.slice(0, HOME_EXPERIENCE_LIMIT);
+  const pageUrl = `${getSiteUrl()}/${locale}`;
+  const jsonLd = buildPersonJsonLd({
+    profile,
+    experiences: allExperiences,
+    contact,
+    education,
+    skills,
+    pageUrl,
+  });
 
   const navSections = [
     { id: 'brief', label: t('home.nav.brief') },
@@ -40,6 +56,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <div className="relative">
+      <JsonLd data={jsonLd} />
       <HomeSectionNav sections={navSections} />
 
       <HomeHero
@@ -80,10 +97,38 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           chapter="02"
           eyebrow={t('home.chapters.track.eyebrow')}
           title={t('sections.experiences')}
-          action={{ href: `/${locale}/sobre`, label: t('sections.viewAll') }}
+          action={
+            allExperiences.length > HOME_EXPERIENCE_LIMIT
+              ? { href: `/${locale}/sobre#experiencias`, label: t('sections.viewMore') }
+              : { href: `/${locale}/sobre`, label: t('sections.viewAll') }
+          }
           fullBleed
         >
-          <ExperienceLog experiences={experiences} />
+          <ExperienceLog
+            experiences={experiences}
+            locale={locale}
+            labels={{
+              logTitle: t('home.experience.logTitle'),
+              entries: t('home.experience.entries'),
+              present: t('home.experience.present'),
+              remote: t('home.experience.remote'),
+              onsite: t('home.experience.onsite'),
+              hybrid: t('home.experience.hybrid'),
+              active: t('home.experience.active'),
+              mode: t('home.experience.mode'),
+              stack: t('home.experience.stack'),
+              scope: t('home.experience.scope'),
+              more: t('home.experience.more'),
+              progression: t('home.experience.progression'),
+            }}
+            totalCount={allExperiences.length}
+            moreHref={
+              allExperiences.length > HOME_EXPERIENCE_LIMIT
+                ? `/${locale}/sobre#experiencias`
+                : undefined
+            }
+            moreLabel={t('sections.viewMore')}
+          />
         </ChapterSection>
       )}
 

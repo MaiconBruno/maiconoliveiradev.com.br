@@ -31,8 +31,31 @@ Vercel (Next.js)  →  API Laravel (Hostinger)  →  MySQL (Hostinger)
 - `.cursor/context/`
 - `.cursor/docs/`
 
-## Status atual
+## Status atual (2026-06-30)
 
-- Documentação `.cursor` completa — ver `docs/readiness-checklist.md`
-- Domínios: `maiconoliveiradev.com.br` / `admin.maiconoliveiradev.com.br`
-- **Próximo passo:** gerar scaffold `apps/web` + `apps/api`
+### Implementado
+
+| Camada | Status |
+|--------|--------|
+| `apps/api` — Laravel 12 | API v1 (10 endpoints), admin Inertia (8 módulos), DeepL, upload |
+| `apps/web` — Next.js 15 | 5 rotas PT/EN, integração API, SEO, Framer Motion |
+| `packages/types` | Contratos TypeScript compartilhados |
+| Docker local | `mysql` + `api` + `web` via `docker compose` |
+| Seed | `PortfolioDataSeeder` + `AdminUserSeeder` |
+
+### Pendente / polish
+
+- Envio real de e-mail no formulário de contato
+- Deploy produção (Vercel + Hostinger com DNS)
+- `sitemap.xml`, `robots.txt`, `html lang` dinâmico, nav ativa
+- CI/CD GitHub Actions
+- Testes automatizados da API
+
+### Domínios
+
+- Site: `maiconoliveiradev.com.br` → Vercel
+- API + Admin: `admin.maiconoliveiradev.com.br` → Hostinger
+
+**Próximo passo:** deploy produção (task 15) e polish final do site (tasks 12–13).
+
+Detalhes: [readiness-checklist.md](../docs/readiness-checklist.md)

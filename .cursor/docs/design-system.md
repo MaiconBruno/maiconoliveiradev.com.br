@@ -171,3 +171,18 @@ Monorepo: `packages/ui-tokens/` com `tailwind.preset.js` exportando cores e font
 ```
 
 O olhar segue: **nome → CTA → projetos → prova social (métricas)** — laranja marca cada parada.
+
+---
+
+## Status implementação (2026-06-30)
+
+| Item | Site (`apps/web`) | Admin (`apps/api`) |
+|------|-----------------|---------------------|
+| Dark + laranja | ✅ | ✅ `AdminLayout` |
+| Tokens CSS `:root` | ⚠️ subconjunto | ⚠️ Tailwind direto |
+| Geist + Geist Mono | ✅ | — (system fonts) |
+| Framer Motion | ✅ `FadeIn` | ❌ (só CSS) |
+| shadcn/ui | ❌ | ❌ |
+| `packages/ui-tokens` | ❌ | ❌ |
+| Focus ring laranja | ⚠️ parcial | ⚠️ parcial |
+| `prefers-reduced-motion` | ✅ | N/A |

@@ -18,6 +18,12 @@ class StoreExperienceRequest extends FormRequest
             'cargo' => ['required', 'array'],
             'cargo.pt' => ['required', 'string', 'max:255'],
             'cargo.en' => ['nullable', 'string', 'max:255'],
+            'progressao' => ['nullable', 'array'],
+            'progressao.*.cargo' => ['required', 'array'],
+            'progressao.*.cargo.pt' => ['required', 'string', 'max:255'],
+            'progressao.*.cargo.en' => ['nullable', 'string', 'max:255'],
+            'progressao.*.periodo_inicio' => ['nullable', 'string', 'max:20'],
+            'progressao.*.periodo_fim' => ['nullable', 'string', 'max:20'],
             'periodo_inicio' => ['nullable', 'string', 'max:20'],
             'periodo_fim' => ['nullable', 'string', 'max:20'],
             'modelo' => ['nullable', 'string', 'in:remoto,hibrido,presencial'],
@@ -50,10 +56,18 @@ class StoreExperienceRequest extends FormRequest
         $data['modelo'] = $this->nullableString($data['modelo'] ?? null);
         $data['tipo'] = $this->nullableString($data['tipo'] ?? null);
         $data['responsabilidades'] = $this->filterResponsabilidades($data['responsabilidades'] ?? []);
+        $data['progressao'] = $this->filterProgressao($data['progressao'] ?? []);
         $data['metricas'] = $this->filterMetricas($data['metricas'] ?? []);
         $data['stack'] = array_values(array_filter($data['stack'] ?? [], fn ($item) => trim($item) !== ''));
 
         return $data;
+    }
+
+    private function filterProgressao(array $items): array
+    {
+        return array_values(array_filter($items, function (array $item) {
+            return trim($item['cargo']['pt'] ?? '') !== '' || trim($item['cargo']['en'] ?? '') !== '';
+        }));
     }
 
     private function filterResponsabilidades(array $items): array

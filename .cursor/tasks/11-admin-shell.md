@@ -1,6 +1,7 @@
 # Task 11 — Admin: Shell e navegação
 
 **ID do agente:** `admin-shell`  
+**Status:** ✅ Concluída (2026-06-30)  
 **Depende de:** Rotas dos módulos (pode criar links antes das páginas existirem)
 
 ---

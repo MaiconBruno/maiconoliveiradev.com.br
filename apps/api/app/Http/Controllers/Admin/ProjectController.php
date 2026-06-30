@@ -38,6 +38,10 @@ class ProjectController extends Controller
                 $request->input('imagens_existentes', []),
                 $request->file('imagens_upload', [])
             );
+            $attributes['galeria'] = $this->syncGaleria(
+                $request->input('galeria_existentes', []),
+                $request->file('galeria_upload', [])
+            );
 
             Project::query()->create($attributes);
 
@@ -74,9 +78,15 @@ class ProjectController extends Controller
                 $request->input('imagens_existentes', []),
                 $request->file('imagens_upload', [])
             );
+            $newGaleria = $this->syncGaleria(
+                $request->input('galeria_existentes', []),
+                $request->file('galeria_upload', [])
+            );
 
             $this->deleteRemovedImages($project, $newImages);
+            $this->deleteRemovedGallery($project, $newGaleria);
             $attributes['imagens'] = $newImages;
+            $attributes['galeria'] = $newGaleria;
 
             if ($attributes['status'] === 'published' && ! $project->publicado_em && empty($attributes['publicado_em'])) {
                 $attributes['publicado_em'] = now();
@@ -101,6 +111,7 @@ class ProjectController extends Controller
     {
         try {
             $this->deleteRemovedImages($project, []);
+            $this->deleteRemovedGallery($project, []);
             $project->delete();
 
             return redirect()
@@ -148,11 +159,49 @@ class ProjectController extends Controller
     }
 
     /**
+     * @param  array<int, array{path: string, type: string}>  $existingItems
+     * @param  array<int, \Illuminate\Http\UploadedFile>  $uploadedFiles
+     * @return array<int, array{path: string, type: string}>
+     */
+    private function syncGaleria(array $existingItems, array $uploadedFiles): array
+    {
+        $items = array_values(array_filter($existingItems, fn (array $item) => ! empty($item['path'])));
+
+        foreach ($uploadedFiles as $file) {
+            $mime = (string) $file->getMimeType();
+            $type = str_starts_with($mime, 'video/') ? 'video' : 'image';
+            $extension = $file->getClientOriginalExtension() ?: ($type === 'video' ? 'mp4' : 'webp');
+            $filename = Str::uuid().'.'.$extension;
+            $stored = $file->storeAs('projects', $filename, 'public');
+
+            if ($stored) {
+                $items[] = ['path' => $stored, 'type' => $type];
+            }
+        }
+
+        return $items;
+    }
+
+    /**
      * @param  array<int, string>  $newPaths
      */
     private function deleteRemovedImages(Project $project, array $newPaths): void
     {
         $oldPaths = $project->imagens ?? [];
+        $removed = array_diff($oldPaths, $newPaths);
+
+        foreach ($removed as $path) {
+            Storage::disk('public')->delete($path);
+        }
+    }
+
+    /**
+     * @param  array<int, array{path: string, type: string}>  $newItems
+     */
+    private function deleteRemovedGallery(Project $project, array $newItems): void
+    {
+        $oldPaths = array_column($project->galeria ?? [], 'path');
+        $newPaths = array_column($newItems, 'path');
         $removed = array_diff($oldPaths, $newPaths);
 
         foreach ($removed as $path) {

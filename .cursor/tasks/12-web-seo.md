@@ -1,7 +1,8 @@
 # Task 12 — Site: SEO dinâmico (Next.js)
 
 **ID do agente:** `web-seo`  
-**Depende de:** Task 06 (dados SEO no banco) — pode usar seed/API atual enquanto admin não existe
+**Status:** ⚠️ Parcial (2026-06-30) — metadata + JSON-LD OK; falta sitemap/robots  
+**Depende de:** Task 06 ✅
 
 ---
 

@@ -98,7 +98,7 @@ function CtaFields({
 export default function Edit({ profile }: Props) {
     const pdfInputRef = useRef<HTMLInputElement>(null);
 
-    const { data, setData, put, processing, errors } = useForm({
+    const { data, setData, post, put, processing, errors, transform } = useForm({
         nome_completo: profile.nome_completo,
         headline: profile.headline,
         localizacao: profile.localizacao ?? '',
@@ -116,10 +116,19 @@ export default function Edit({ profile }: Props) {
     const submit = (e: FormEvent) => {
         e.preventDefault();
 
-        put('/admin/profile', {
-            forceFormData: Boolean(data.curriculo_pdf_file),
-            preserveScroll: true,
-        });
+        const hasPdfUpload = Boolean(data.curriculo_pdf_file);
+
+        if (hasPdfUpload) {
+            transform((payload) => ({ ...payload, _method: 'put' }));
+            post('/admin/profile', {
+                forceFormData: true,
+                preserveScroll: true,
+                onFinish: () => transform((payload) => payload),
+            });
+            return;
+        }
+
+        put('/admin/profile', { preserveScroll: true });
     };
 
     const ptFields: Record<string, string> = {};

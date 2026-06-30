@@ -118,3 +118,19 @@ Registro de decisões arquiteturais e de produto.
 **Decisão:** Animações sutis no site (Framer Motion); admin só transições CSS.
 
 **Consequências:** `framer-motion` em `apps/web`; `prefers-reduced-motion` obrigatório.
+
+### 2026-06-30 — Progressão em experiências
+
+**Contexto:** Algumas experiências têm múltiplos cargos na mesma empresa (ex. promoções).
+
+**Decisão:** Campo JSON `progressao` em `Experience` com sub-cargos (`cargo`, `periodo`, `descricao` bilíngue).
+
+**Consequências:** Timeline no site (`ExperienceLog`, `ExperienceProgression`); formulário admin estendido.
+
+### 2026-06-30 — Galeria de projetos
+
+**Contexto:** Case studies precisam de capa + múltiplas mídias (imagem e vídeo).
+
+**Decisão:** Campo JSON `galeria` em `Project` (`capa`, `midias[]` com `tipo`, `path`, `legenda`). Migração de `imagens` legado.
+
+**Consequências:** `ProjectGalleryCarousel`, `MediaGalleryUpload` no admin; API retorna `galeria`.

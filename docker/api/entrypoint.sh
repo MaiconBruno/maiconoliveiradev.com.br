@@ -42,7 +42,12 @@ fi
 
 php artisan config:clear
 php artisan migrate --force
-php artisan db:seed --force
+
+# Seed apenas na primeira subida (DB vazio) — evita sobrescrever edições do admin
+if php artisan tinker --execute='echo \App\Models\Project::count();' 2>/dev/null | tail -1 | grep -q '^0$'; then
+  php artisan db:seed --force
+fi
+
 php artisan storage:link 2>/dev/null || true
 
 if [ ! -f public/build/manifest.json ]; then

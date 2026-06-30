@@ -28,6 +28,16 @@ class ExperienceController extends BaseApiController
                 ['cargo', 'descricao', 'responsabilidades']
             );
 
+            if (is_array($data['progressao'] ?? null)) {
+                $data['progressao'] = array_map(function (array $step) use ($locale) {
+                    if (isset($step['cargo']) && is_array($step['cargo'])) {
+                        $step['cargo'] = Locale::resolve($step['cargo'], $locale);
+                    }
+
+                    return $step;
+                }, $data['progressao']);
+            }
+
             if (is_array($data['metricas'] ?? null)) {
                 $data['metricas'] = array_map(function (array $metrica) use ($locale) {
                     if (isset($metrica['label']) && is_array($metrica['label'])) {

@@ -52,22 +52,21 @@ php artisan db:seed --class=PortfolioDataSeeder
 
 ---
 
-## Implementação (planejada)
+## Implementação
 
 ```
 apps/api/database/seeders/
-├── DatabaseSeeder.php
+├── DatabaseSeeder.php           # AdminUserSeeder + PortfolioDataSeeder
 ├── AdminUserSeeder.php          # ADMIN_* do .env
-└── PortfolioDataSeeder.php      # parser portfolio-data.md
+└── PortfolioDataSeeder.php      # dados hardcoded espelhando portfolio-data.md
 ```
 
-### Parser `portfolio-data.md`
+### Comportamento atual
 
-- Ler arquivo na raiz do monorepo: `../../portfolio-data.md` (ou path configurável)
-- Mapear tabelas markdown → models Eloquent
-- Campos bilíngues: `{ "pt": "...", "en": null }` — EN gerado depois no admin via DeepL
-- Projetos sem métricas confirmadas: importar sem inventar valores
-- Status inicial: `publicado` para conteúdo confirmado no arquivo
+- Dados espelham `portfolio-data.md` (hardcoded no seeder, não parser markdown dinâmico)
+- Campos bilíngues: `{ "pt": "...", "en": null }` — EN via DeepL no admin
+- Docker entrypoint: seed **somente se** `Project::count() === 0` (não sobrescreve edições)
+- Flag deploy: `PORTFOLIO_SEED_ON_DEPLOY=true` no primeiro deploy Hostinger
 
 ---
 
@@ -81,6 +80,8 @@ apps/api/database/seeders/
 ## Status
 
 - [x] Decisão: seed automático no primeiro deploy
-- [ ] `PortfolioDataSeeder` implementado
-- [ ] Parser markdown → models
+- [x] `PortfolioDataSeeder` implementado (dados hardcoded)
+- [x] `AdminUserSeeder` via `ADMIN_*` do `.env`
+- [x] Idempotência no Docker (só seed se banco vazio)
+- [ ] Parser markdown dinâmico → models (opcional)
 - [ ] Testes do seeder

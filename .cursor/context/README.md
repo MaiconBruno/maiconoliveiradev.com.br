@@ -2,14 +2,16 @@
 
 > Contexto persistente para o agente: domínio, público-alvo, tom, restrições e fontes de verdade.
 
+**Status (2026-06-30):** MVP funcional em desenvolvimento local. Ver [readiness-checklist.md](../docs/readiness-checklist.md).
+
 ## Produto
 
 Portfólio profissional com **painel administrativo**:
 
-| Área | Função |
-|------|--------|
-| Site público | Apresentação, listagem de projetos, conteúdo editável |
-| Painel admin | Gerenciar 8 módulos (projetos, hero, exp., skills, contato, SEO, formação, cert.) |
+| Área | Função | Status |
+|------|--------|--------|
+| Site público | Apresentação, listagem de projetos, conteúdo editável | ✅ 5 rotas PT/EN |
+| Painel admin | Gerenciar 8 módulos | ✅ CRUD completo |
 
 ## Hospedagem
 
@@ -21,13 +23,14 @@ Portfólio profissional com **painel administrativo**:
 
 | Camada | Tecnologia | Hospedagem |
 |--------|------------|------------|
-| Site público | **Next.js** | **Vercel** |
-| API + painel admin | **Laravel** | **Hostinger Premium** |
-| Banco de dados | **MySQL** | **Hostinger** (hPanel) |
+| Site público | **Next.js 15** | **Vercel** |
+| API + painel admin | **Laravel 12** | **Hostinger Premium** |
+| Banco de dados | **MySQL 8** | **Hostinger** (hPanel) |
 | ORM (Laravel) | **Eloquent** | — |
 | Admin UI | **Inertia.js + React** | Hostinger (`apps/api`) |
+| Tipos compartilhados | **`@portfolio/types`** | Monorepo |
 
-## Domínios (planejado)
+## Domínios
 
 | Subdomínio / rota | Destino |
 |-------------------|---------|
@@ -37,8 +40,22 @@ Portfólio profissional com **painel administrativo**:
 ## Design (site público)
 
 - **Dark minimalista** com acentos **laranja**
-- Tailwind CSS + shadcn/ui
+- Tailwind CSS + componentes custom (shadcn/ui planejado, não instalado)
 - Páginas: home, projetos, projeto/[slug], sobre, contato — ver [site-pages.md](../docs/site-pages.md)
 - Detalhes visuais: [design-system.md](../docs/design-system.md)
 
-`portfolio-data.md` — perfil, experiências, projetos e métricas confirmadas (não fabricar dados).
+## Fonte de conteúdo
+
+`portfolio-data.md` — perfil, experiências, projetos e métricas confirmadas (**não fabricar dados**).
+
+## Dev local
+
+```bash
+docker compose up -d --build
+```
+
+| Serviço | URL |
+|---------|-----|
+| Site | http://localhost:3000/pt |
+| Admin | http://localhost:8000/login |
+| API | http://localhost:8000/api/v1/profile |

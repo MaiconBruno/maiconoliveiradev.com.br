@@ -13,6 +13,7 @@
     "experiences": "Experience",
     "skills": "Skills",
     "viewAll": "View all",
+    "viewMore": "View more",
     "social": "Social links"
   },
   "contact": {
@@ -34,8 +35,24 @@
   },
   "projects": {
     "title": "Projects",
+    "eyebrow": "Archive",
+    "subtitle": "Production cases and products — from architecture to deploy.",
+    "featured": "Featured",
+    "archive": "Archive",
+    "allCases": "All cases",
+    "count": "{count, plural, one {# published project} other {# published projects}}",
     "viewCase": "View case study",
-    "empty": "No published projects yet."
+    "empty": "No published projects yet.",
+    "back": "Projects",
+    "preview": "Preview",
+    "overview": "Overview",
+    "metrics": "Metrics",
+    "viewLive": "View live project",
+    "carousel": {
+      "prev": "Previous slide",
+      "next": "Next slide",
+      "slide": "Slide"
+    }
   },
   "footer": {
     "rights": "All rights reserved."
@@ -68,6 +85,21 @@
     "contactBand": {
       "eyebrow": "04 · Contact",
       "formLink": "Contact form"
+    },
+    "experience": {
+      "present": "present",
+      "remote": "Remote",
+      "onsite": "On-site",
+      "hybrid": "Hybrid",
+      "logTitle": "track.log",
+      "entries": "entries",
+      "active": "active",
+      "mode": "mode",
+      "stack": "stack",
+      "scope": "scope",
+      "signals": "signals",
+      "more": "more entries",
+      "progression": "progression"
     }
   }
 }

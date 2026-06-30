@@ -13,29 +13,46 @@
     "experiences": "Experiências",
     "skills": "Skills",
     "viewAll": "Ver todas",
+    "viewMore": "Ver mais",
     "social": "Redes sociais"
   },
   "contact": {
     "title": "Contato",
-    "subtitle": "Envie uma mensagem ou conecte-se pelas redes.",
+    "subtitle": "Envie uma mensagem ou conecte nas redes sociais.",
     "name": "Nome",
     "email": "E-mail",
     "subject": "Assunto",
     "message": "Mensagem",
     "send": "Enviar mensagem",
     "success": "Mensagem enviada com sucesso!",
-    "error": "Erro ao enviar. Tente novamente."
+    "error": "Falha ao enviar. Tente novamente."
   },
   "about": {
     "title": "Sobre",
-    "experience": "Experiência",
+    "experience": "Experiências",
     "education": "Formação",
     "certifications": "Certificações"
   },
   "projects": {
     "title": "Projetos",
+    "eyebrow": "Arquivo",
+    "subtitle": "Cases e produtos em produção — do desenho da arquitetura ao deploy.",
+    "featured": "Em destaque",
+    "archive": "Arquivo",
+    "allCases": "Todos os cases",
+    "count": "{count, plural, one {# projeto publicado} other {# projetos publicados}}",
     "viewCase": "Ver case",
-    "empty": "Nenhum projeto publicado ainda."
+    "empty": "Nenhum projeto publicado ainda.",
+    "back": "Projetos",
+    "preview": "Preview",
+    "overview": "Visão geral",
+    "metrics": "Métricas",
+    "viewLive": "Ver projeto ao vivo",
+    "carousel": {
+      "prev": "Slide anterior",
+      "next": "Próximo slide",
+      "slide": "Slide"
+    }
   },
   "footer": {
     "rights": "Todos os direitos reservados."
@@ -49,25 +66,40 @@
       "work": "Work",
       "track": "Track",
       "stack": "Stack",
-      "contact": "Contato"
+      "contact": "Contact"
     },
     "briefing": {
       "label": "Contexto operacional",
       "base": "Base",
       "mode": "Modo",
-      "tenure": "Experiência"
+      "tenure": "Tempo"
     },
     "chapters": {
-      "work": { "eyebrow": "Casos selecionados" },
+      "work": { "eyebrow": "Cases selecionados" },
       "track": { "eyebrow": "Trajetória" },
-      "stack": { "eyebrow": "Ferramental" }
+      "stack": { "eyebrow": "Toolkit" }
     },
     "archive": {
       "eyebrow": "Arquivo"
     },
     "contactBand": {
       "eyebrow": "04 · Contato",
-      "formLink": "Formulário"
+      "formLink": "Formulário de contato"
+    },
+    "experience": {
+      "present": "atual",
+      "remote": "Remoto",
+      "onsite": "Presencial",
+      "hybrid": "Híbrido",
+      "logTitle": "track.log",
+      "entries": "entradas",
+      "active": "ativo",
+      "mode": "modo",
+      "stack": "stack",
+      "scope": "escopo",
+      "signals": "sinais",
+      "more": "mais entradas",
+      "progression": "progressão"
     }
   }
 }
