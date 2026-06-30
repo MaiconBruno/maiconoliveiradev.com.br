@@ -39,5 +39,35 @@
   },
   "footer": {
     "rights": "All rights reserved."
+  },
+  "home": {
+    "dispatchLabel": "Dispatch · 2026",
+    "proofStrip": "Signals",
+    "stackTicker": "Runtime",
+    "nav": {
+      "brief": "Brief",
+      "work": "Work",
+      "track": "Track",
+      "stack": "Stack",
+      "contact": "Contact"
+    },
+    "briefing": {
+      "label": "Operating context",
+      "base": "Base",
+      "mode": "Mode",
+      "tenure": "Tenure"
+    },
+    "chapters": {
+      "work": { "eyebrow": "Selected cases" },
+      "track": { "eyebrow": "Trajectory" },
+      "stack": { "eyebrow": "Toolkit" }
+    },
+    "archive": {
+      "eyebrow": "Archive"
+    },
+    "contactBand": {
+      "eyebrow": "04 · Contact",
+      "formLink": "Contact form"
+    }
   }
 }

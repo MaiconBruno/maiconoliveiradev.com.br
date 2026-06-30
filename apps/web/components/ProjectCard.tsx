@@ -19,7 +19,7 @@ export function ProjectCard({
       className="group block overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 transition duration-200 hover:scale-[1.02] hover:border-orange-500/30 hover:shadow-[0_0_24px_rgba(249,115,22,0.15)]"
     >
       {cover && (
-        <div className="relative aspect-video overflow-hidden border-b border-zinc-800">
+        <div className="relative aspect-[2/1] max-h-[160px] overflow-hidden border-b border-zinc-800">
           <StorageImage
             path={cover}
             alt={project.titulo}

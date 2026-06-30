@@ -106,8 +106,8 @@ export default async function ProjectDetailPage({
               key={m.label}
               className="rounded-lg border border-zinc-800 border-l-2 border-l-orange-500 bg-zinc-900 p-4"
             >
-              <p className="text-2xl font-bold text-orange-500">{m.valor}</p>
-              <p className="text-sm text-zinc-400">{m.label}</p>
+              <p className="text-2xl font-bold text-orange-500">{m.label}</p>
+              {m.valor ? <p className="text-sm text-zinc-400">{m.valor}</p> : null}
             </div>
           ))}
         </FadeIn>
