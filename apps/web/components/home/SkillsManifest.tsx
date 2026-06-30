@@ -36,7 +36,7 @@ export function SkillsManifest({
                 <ul className="flex flex-wrap gap-x-4 gap-y-2">
                   {group.skills.map((skill) => (
                     <li
-                      key={skill.id}
+                      key={skill?.nome}
                       className="font-mono text-sm text-zinc-300 before:mr-2 before:text-zinc-600 before:content-['›']"
                     >
                       {skill.nome}
