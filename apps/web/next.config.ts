@@ -18,6 +18,12 @@ const nextConfig: NextConfig = {
         port: '8000',
         pathname: '/storage/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'api',
+        port: '8000',
+        pathname: '/storage/**',
+      },
     ],
   },
 };
