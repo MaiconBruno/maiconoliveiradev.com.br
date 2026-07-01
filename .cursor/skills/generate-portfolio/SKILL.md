@@ -6,21 +6,24 @@ description: >-
   para criar, scaffold, gerar ou atualizar o projeto.
 ---
 
-# Gerar portfólio
+# Gerar / evoluir portfólio
 
-## Antes de gerar
+**Status (2026-06-30):** Scaffold gerado. Modo atual = **evolução** (polish, deploy, lacunas).
+
+## Antes de codar
 
 1. Ler `portfolio-data.md`
-2. Ler `.cursor/docs/readiness-checklist.md`
+2. Ler `.cursor/docs/readiness-checklist.md` — status atual
 3. Ler `.cursor/skills/stack/instructions.md`
 4. Não fabricar experiência, métricas ou projetos
 
-## Estrutura alvo
+## Estrutura (existente)
 
 ```
-apps/web/     # Next.js 15, next-intl, Tailwind, shadcn, Framer Motion
-apps/api/     # Laravel 12, Breeze+Inertia+React, MySQL
-packages/types/
+apps/web/          # Next.js 15 — 5 rotas PT/EN ✅
+apps/api/          # Laravel 12 — API v1 + admin 8 módulos ✅
+packages/types/    # @portfolio/types ✅
+docker-compose.yml # mysql + api + web ✅
 portfolio-data.md
 ```
 
@@ -29,20 +32,36 @@ portfolio-data.md
 - Site: `maiconoliveiradev.com.br`
 - API+Admin: `admin.maiconoliveiradev.com.br`
 
-## Ordem de geração
+## O que já existe (não regerar)
 
-1. Scaffold Laravel em `apps/api` (Breeze React/Inertia)
-2. Scaffold Next.js em `apps/web`
-3. Models + migrations + seed (`PortfolioDataSeeder`)
-4. API v1 pública + CORS
-5. Admin CRUD (6 módulos + formação + certificações)
-6. DeepL translate endpoint + tabs PT/EN
-7. Páginas Next (`/pt`, `/en`) conforme `docs/site-pages.md`
-8. Design tokens `docs/design-system.md`
+- Migrations, models, seeders (`PortfolioDataSeeder`, `AdminUserSeeder`)
+- API v1 pública (10 endpoints)
+- Admin: login, dashboard, CRUD dos 8 módulos
+- DeepL (`DeepLTranslationService`, `POST /admin/translate`)
+- Upload (`ImageUploadService`, galeria image/video)
+- Site: home, projetos, case, sobre, contato
+- SEO: `generateMetadata` + JSON-LD
+- Docker Compose local
+
+## Lacunas conhecidas (prioridade)
+
+1. E-mail SMTP no `POST /contact`
+2. Deploy produção (task 15)
+3. `sitemap.xml`, `robots.txt`, `html lang` dinâmico
+4. Nav ativa no header
+5. CI/CD GitHub Actions (task 16)
+6. Testes API
+
+## Ordem para novas features
+
+1. Consultar [readiness-checklist.md](../docs/readiness-checklist.md)
+2. Usar task específica em `.cursor/tasks/` se existir
+3. Seguir padrões dos módulos já implementados (ex. `ProjectController` + `ProjectForm`)
+4. Tipos em `packages/types` quando alterar contratos API
 
 ## Referências
 
 - API: [api-conventions.md](../docs/api-conventions.md)
 - Modelos: [content-models.md](../docs/content-models.md)
-- Deploy: [workflows/deploy-initial.md](../workflows/deploy-initial.md)
+- Deploy: [workflows/deploy-producao.md](../workflows/deploy-producao.md)
 - Dev local: [workflows/local-dev.md](../workflows/local-dev.md)

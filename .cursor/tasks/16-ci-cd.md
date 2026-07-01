@@ -1,6 +1,7 @@
 # Task 16 — CI/CD (opcional)
 
 **ID do agente:** `ci-cd`  
+**Status:** ❌ Pendente (2026-06-30)  
 **Depende de:** Task 15 (deploy manual funcionando)
 
 ---

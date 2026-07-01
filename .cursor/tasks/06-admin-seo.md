@@ -1,6 +1,7 @@
 # Task 06 — Admin: SEO
 
 **ID do agente:** `admin-seo`  
+**Status:** ✅ Concluída (2026-06-30)  
 **Depende de:** Task 01 (padrão CRUD), Task 10 (upload OG — pode implementar inline se 10 não pronta)
 
 ---

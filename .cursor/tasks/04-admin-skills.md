@@ -1,6 +1,7 @@
 # Task 04 — Admin: Skills
 
 **ID do agente:** `admin-skills`  
+**Status:** ✅ Concluída (2026-06-30)  
 **Depende de:** Task 01 (padrão CRUD)
 
 ---

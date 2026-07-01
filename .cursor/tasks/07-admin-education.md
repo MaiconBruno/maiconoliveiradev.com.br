@@ -1,6 +1,7 @@
 # Task 07 — Admin: Formação acadêmica
 
 **ID do agente:** `admin-education`  
+**Status:** ✅ Concluída (2026-06-30)  
 **Depende de:** Task 01 (padrão CRUD)
 
 ---

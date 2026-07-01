@@ -1,7 +1,8 @@
 # Task 15 — Deploy produção
 
 **ID do agente:** `deploy-prod`  
-**Depende de:** MVP estável (tasks 01–13 principais)
+**Status:** 🔄 Em andamento (2026-06-30) — workflows prontos; DNS/Vercel pendentes  
+**Depende de:** MVP estável (tasks 01–13 principais) ✅
 
 ---
 

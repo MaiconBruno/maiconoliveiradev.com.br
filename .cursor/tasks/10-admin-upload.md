@@ -1,6 +1,7 @@
 # Task 10 — Admin: Upload e storage
 
 **ID do agente:** `admin-upload`  
+**Status:** ✅ Concluída (2026-06-30) — inclui galeria vídeo  
 **Prioridade:** Alta — desbloqueia tasks 01, 02, 06, 13
 
 ---

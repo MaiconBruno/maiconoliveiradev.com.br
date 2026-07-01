@@ -32,12 +32,15 @@
 | `descricao` | json `{pt,en}` | **Markdown** |
 | `metricas` | json/array | `{ label, valor }` — só fatos confirmados |
 | `destaques` | json/array | bullets traduzíveis |
-| `imagens` | media[] | `storage/app/public/projects/` |
-| `ordem` | int | ordenação no site |
+| `imagens` | media[] | legado — migrado para `galeria` |
+| `galeria` | json | `{ capa?, midias: [{ tipo, path, legenda? }] }` — image/video |
+| `ordem` | int | ordenação no site (campo numérico; sem drag-and-drop) |
 | `destaque` | bool | home — máx. **6** exibidos |
 | `publicado_em` | datetime | opcional |
 
-**Ações:** criar · editar · publicar/despublicar · reordenar · upload
+**Ações:** criar · editar · publicar/despublicar · reordenar (campo `ordem`) · upload
+
+**Status implementação:** ✅ CRUD completo · ⚠️ URLs absolutas de mídia na API pendentes
 
 ---
 
@@ -73,8 +76,11 @@
 | `responsabilidades` | json | bullets `{pt,en}` |
 | `stack` | json/array | opcional |
 | `metricas` | json/array | `{ label, valor }` |
+| `progressao` | json/array | sub-cargos: `{ cargo, periodo?, descricao? }` bilíngue |
 | `ordem` | int | mais recente primeiro |
 | `publicado` | bool | |
+
+**Status implementação:** ✅ CRUD + API · campo `progressao` exibido no site (`ExperienceLog`)
 
 ---
 
@@ -149,3 +155,18 @@ Somente registros **publicados**. Locale via `Accept-Language`.
 ## Regra de conteúdo
 
 Não fabricar métricas, projetos ou certificações — alinhado a `portfolio-data.md`.
+
+---
+
+## Status geral (2026-06-30)
+
+| Módulo | Admin | API pública |
+|--------|-------|-------------|
+| 1 Projetos | ✅ | ⚠️ URLs mídia |
+| 2 Hero/Sobre | ✅ | ✅ |
+| 3 Experiências | ✅ | ✅ |
+| 4 Skills | ✅ | ⚠️ sem `nivel` |
+| 5 Contato | ✅ | ⚠️ POST só loga |
+| 6 SEO | ✅ | ✅ |
+| 7 Formação | ✅ | ✅ |
+| 8 Certificações | ✅ | ✅ |

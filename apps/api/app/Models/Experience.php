@@ -9,6 +9,7 @@ class Experience extends Model
     protected $fillable = [
         'empresa',
         'cargo',
+        'progressao',
         'periodo_inicio',
         'periodo_fim',
         'modelo',
@@ -25,6 +26,7 @@ class Experience extends Model
     {
         return [
             'cargo' => 'array',
+            'progressao' => 'array',
             'descricao' => 'array',
             'responsabilidades' => 'array',
             'stack' => 'array',

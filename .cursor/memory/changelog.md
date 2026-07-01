@@ -8,6 +8,16 @@ Histórico de mudanças relevantes no projeto e na documentação `.cursor`.
 
 ## Entradas
 
+### 2026-06-30
+
+- **Documentação revisada** — status atual alinhado ao código em todos os `.md`
+- **MVP ~85–90%:** API v1, admin 8 módulos, site 5 rotas, `packages/types`, Docker
+- Campo `progressao` em experiências (sub-cargos na timeline)
+- Campo `galeria` em projetos (capa + mídia image/video)
+- `PortfolioDataSeeder` implementado (dados espelhando `portfolio-data.md`)
+- Workflows de deploy Hostinger (`deploy-hostinger.sh`, `deploy-producao.md`)
+- Pendências documentadas: e-mail contato, sitemap, CI/CD, polish web
+
 ### 2026-06-28
 
 - Estrutura inicial `.cursor/` criada (skills, workflows, docs, context, examples, memory)

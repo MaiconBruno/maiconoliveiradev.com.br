@@ -1,8 +1,8 @@
 import ReactMarkdown from 'react-markdown';
 
-export function MarkdownContent({ content }: { content: string }) {
+export function MarkdownContent({ content, className }: { content: string; className?: string }) {
   return (
-    <div className="prose prose-invert max-w-none">
+    <div className={`prose prose-invert max-w-none ${className ?? ''}`}>
       <ReactMarkdown
         components={{
           a: ({ href, children }) => (

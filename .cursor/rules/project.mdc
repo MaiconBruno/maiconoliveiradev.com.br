@@ -9,14 +9,15 @@ Antes de implementar, carregar documentação em `.cursor/`:
 
 1. `memory/project.md` — objetivo e arquitetura
 2. `skills/stack/instructions.md` — stack e monorepo
-3. `docs/readiness-checklist.md` — escopo v1
+3. `docs/readiness-checklist.md` — status atual do MVP
 4. `portfolio-data.md` — fonte mestre; **não fabricar** métricas ou fatos
 
 ## Stack
 
 - `apps/web` — Next.js 15 → Vercel → `maiconoliveiradev.com.br`
 - `apps/api` — Laravel 12 → Hostinger → `admin.maiconoliveiradev.com.br`
-- MySQL, Inertia+React admin, API `/api/v1/*`
+- `packages/types` — contratos TypeScript compartilhados
+- MVP funcional em dev local; ver `docs/readiness-checklist.md`
 
 ## Regras
 

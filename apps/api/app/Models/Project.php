@@ -19,6 +19,7 @@ class Project extends Model
         'metricas',
         'destaques',
         'imagens',
+        'galeria',
         'ordem',
         'destaque',
         'publicado_em',
@@ -34,6 +35,7 @@ class Project extends Model
             'metricas' => 'array',
             'destaques' => 'array',
             'imagens' => 'array',
+            'galeria' => 'array',
             'destaque' => 'boolean',
             'publicado_em' => 'datetime',
         ];

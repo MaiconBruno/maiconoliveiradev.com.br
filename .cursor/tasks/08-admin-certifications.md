@@ -1,6 +1,7 @@
 # Task 08 — Admin: Certificações
 
 **ID do agente:** `admin-certifications`  
+**Status:** ✅ Concluída (2026-06-30)  
 **Depende de:** Task 01 (padrão CRUD)
 
 ---

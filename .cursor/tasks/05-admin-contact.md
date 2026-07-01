@@ -1,6 +1,7 @@
 # Task 05 — Admin: Contato e redes
 
 **ID do agente:** `admin-contact`  
+**Status:** ⚠️ Parcial (2026-06-30) — admin OK; POST API não envia e-mail  
 **Depende de:** Task 01 (padrão formulário)
 
 ---

@@ -77,3 +77,20 @@ Query `?page=1&per_page=20` — não necessário na v1 (poucos projetos).
 ## Tipos compartilhados
 
 Contratos TypeScript em `packages/types/src/api.ts` espelhando estes endpoints.
+
+---
+
+## Status implementação (2026-06-30)
+
+| Item | Status |
+|------|--------|
+| 10 endpoints públicos | ✅ |
+| `Accept-Language` | ✅ (`App\Support\Locale`) |
+| Cache `max-age=300` | ✅ |
+| CORS produção + Vercel preview | ✅ |
+| Honeypot + rate limit contato | ✅ |
+| POST contact → e-mail SMTP | ⚠️ só `Log::info` |
+| Invalidação cache no admin | ❌ opcional |
+| Testes feature | ❌ |
+| `nivel` em GET `/skills` | ❌ omitido na resposta |
+| URLs absolutas mídia projetos | ⚠️ paths relativos |

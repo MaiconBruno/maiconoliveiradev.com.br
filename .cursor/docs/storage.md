@@ -65,8 +65,22 @@ Incluir `storage/app/public` no backup manual ou rotina Hostinger — imagens n�
 
 ---
 
+## Pastas de upload
+
+| Módulo | Path |
+|--------|------|
+| Projetos | `storage/app/public/projects/` |
+| Perfil | `storage/app/public/profile/` |
+| SEO | `storage/app/public/seo/` |
+
+Galeria de projetos suporta **imagem e vídeo** (`galeria` JSON).
+
 ## Status
 
 - [x] Disco: `storage/app/public` (Laravel local)
 - [x] Validação: 5 MB, jpeg/png/webp
+- [x] `ImageUploadService` + endpoints admin
+- [x] Galeria image/video em projetos
+- [x] Deploy Hostinger: symlink persistente via `deploy-hostinger.sh`
 - [ ] Otimização de imagens (opcional)
+- [ ] URLs absolutas na API de projetos (parcial — profile/seo resolvem)

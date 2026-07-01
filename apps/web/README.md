@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# apps/web — Site público
 
-## Getting Started
+Next.js 15 (App Router) com next-intl, Tailwind CSS 4 e Framer Motion.
 
-First, run the development server:
+**Deploy:** Vercel → `maiconoliveiradev.com.br`
+
+## Rotas
+
+| Rota | Página |
+|------|--------|
+| `/pt` · `/en` | Home |
+| `/[locale]/projetos` | Lista de projetos |
+| `/[locale]/projetos/[slug]` | Case study |
+| `/[locale]/sobre` | Bio, experiências, formação, certificações |
+| `/[locale]/contato` | Formulário + links diretos |
+
+Raiz `/` redireciona para `/pt` ou `/en` via cookie `locale`.
+
+## Desenvolvimento
 
 ```bash
+# Com Docker (recomendado, na raiz do monorepo)
+docker compose up -d --build
+
+# Ou localmente
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Site: http://localhost:3000/pt
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Variáveis de ambiente
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copiar de `.env.example`:
 
-## Learn More
+```env
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_API_URL=http://localhost:8000
+API_INTERNAL_URL=http://api:8000   # SSR no Docker
+NEXT_PUBLIC_DEFAULT_LOCALE=pt
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Estrutura
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/[locale]/     # Páginas por locale
+components/       # UI (home/, projects/, layout)
+lib/              # fetchApi, seo, json-ld
+messages/         # pt.json, en.json (UI estática)
+i18n/             # routing next-intl
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Integração API
 
-## Deploy on Vercel
+Todos os dados dinâmicos vêm de `https://admin.maiconoliveiradev.com.br/api/v1/*` (ou `localhost:8000` em dev).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Helper: `lib/utils.ts` → `fetchApi<T>(path, locale)` com `revalidate: 300`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Tipos: `@portfolio/types` (`packages/types`).
+
+## Scripts
+
+| Comando | Ação |
+|---------|------|
+| `npm run dev` | Servidor de desenvolvimento |
+| `npm run build` | Build de produção |
+| `npm run lint` | ESLint |
+
+## Documentação
+
+- [site-pages.md](../../.cursor/docs/site-pages.md)
+- [design-system.md](../../.cursor/docs/design-system.md)
+- [api-conventions.md](../../.cursor/docs/api-conventions.md)

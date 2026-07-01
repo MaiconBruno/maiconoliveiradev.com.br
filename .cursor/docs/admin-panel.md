@@ -63,3 +63,19 @@ apps/api/
 - Credenciais em `.env` ou definidas manualmente após seed
 
 Mesmo deploy Hostinger que a API — Inertia serve o React compilado pelo Vite; não precisa de app Node separado no Premium.
+
+---
+
+## Status implementação (2026-06-30)
+
+| Item | Status |
+|------|--------|
+| Login e-mail + senha | ✅ |
+| `/admin/*` protegido | ✅ |
+| 8 módulos CRUD | ✅ |
+| Tabs PT/EN + Gerar EN (DeepL) | ✅ |
+| Sidebar dark + laranja | ✅ `AdminLayout` |
+| Upload de mídia | ✅ |
+| Laravel Breeze (pacote) | ⚠️ padrão equivalente, pacote não instalado |
+| Reordenação drag-and-drop | ❌ (campo `ordem` numérico) |
+| Rotas `show` órfãs | ⚠️ projects, educations, certifications |

@@ -1,7 +1,7 @@
 # Deploy — Hostinger (API + Admin)
 
-> **Escopo desta fase:** subir só `apps/api` em `admin.maiconoliveiradev.com.br`.  
-> O site Next.js (Vercel) fica para a fase seguinte.
+> **Escopo:** `apps/api` em `admin.maiconoliveiradev.com.br`.  
+> Site Next.js (Vercel) — ver [deploy-initial.md](./deploy-initial.md). **Código do site pronto (2026-06-30).**
 
 ---
 
@@ -260,4 +260,4 @@ Login: `ADMIN_EMAIL` + `ADMIN_PASSWORD` do `.env`.
 
 ## Próxima fase
 
-Quando o admin estiver OK → [deploy-initial.md](./deploy-initial.md) seção Vercel (site público).
+Site Next.js na Vercel — [deploy-initial.md](./deploy-initial.md) (código em `apps/web` já implementado).

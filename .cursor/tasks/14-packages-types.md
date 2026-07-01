@@ -1,6 +1,7 @@
 # Task 14 — packages/types (contratos API)
 
 **ID do agente:** `packages-types`  
+**Status:** ✅ Concluída (2026-06-30)  
 **Independente** — pode rodar em paralelo com qualquer task
 
 ---

@@ -15,10 +15,15 @@ class UploadController extends Controller
         $data = $request->validate([
             'file' => ['required', 'file'],
             'folder' => ['required', 'string', 'in:'.implode(',', ImageUploadService::ALLOWED_FOLDERS)],
+            'allow_video' => ['sometimes', 'boolean'],
         ]);
 
         try {
-            $result = $uploadService->store($data['file'], $data['folder']);
+            $result = $uploadService->store(
+                $data['file'],
+                $data['folder'],
+                $request->boolean('allow_video')
+            );
         } catch (InvalidArgumentException $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }

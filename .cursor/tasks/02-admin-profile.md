@@ -1,6 +1,7 @@
 # Task 02 — Admin: Hero / Sobre (Profile)
 
 **ID do agente:** `admin-profile`  
+**Status:** ✅ Concluída (2026-06-30)  
 **Depende de:** Task 01 (padrão CRUD/formulário)
 
 ---

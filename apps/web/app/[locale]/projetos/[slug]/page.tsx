@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { FadeIn } from '@/components/FadeIn';
 import { MarkdownContent } from '@/components/MarkdownContent';
-import { StorageImage } from '@/components/StorageImage';
+import { ProjectGalleryCarousel } from '@/components/projects/ProjectGalleryCarousel';
 import { getSeoMetadata, truncateDescription } from '@/lib/seo';
+import { buildProjectGallery } from '@/lib/project-gallery';
 import { fetchApi } from '@/lib/utils';
 import type { Project } from '@portfolio/types';
 
@@ -40,6 +42,7 @@ export default async function ProjectDetailPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  const t = await getTranslations({ locale, namespace: 'projects' });
 
   let project: Project;
   try {
@@ -48,104 +51,150 @@ export default async function ProjectDetailPage({
     notFound();
   }
 
-  const heroImage = project.imagens?.[0];
-  const galleryImages = project.imagens?.slice(heroImage ? 1 : 0) ?? [];
+  const galleryItems = buildProjectGallery(project);
+  const highlight = project.destaques?.[0];
 
   return (
-    <article className="mx-auto max-w-4xl px-4 py-20">
-      <FadeIn>
-        <Link href={`/${locale}/projetos`} className="text-sm text-orange-400 hover:text-orange-300">
-          ← Projetos
-        </Link>
-      </FadeIn>
+    <article>
+      <section className="relative overflow-hidden border-b border-zinc-800/60">
+        <div className="bg-grid-pattern pointer-events-none absolute inset-0" aria-hidden />
+        <div
+          className="pointer-events-none absolute -left-24 top-1/3 h-72 w-72 rounded-full bg-orange-500/5 blur-3xl"
+          aria-hidden
+        />
 
-      {heroImage && (
-        <FadeIn className="relative mt-8 aspect-[21/9] overflow-hidden rounded-xl border border-zinc-800">
-          <StorageImage
-            path={heroImage}
-            alt={project.titulo}
-            fill
-            priority
-            sizes="(max-width: 896px) 100vw, 896px"
-            className="object-cover"
-          />
-        </FadeIn>
-      )}
-
-      <FadeIn delay={0.08}>
-        <h1 className="mt-8 text-4xl font-bold tracking-tight text-white md:tracking-[-0.02em]">
-          {project.titulo}
-        </h1>
-        {project.empresa && <p className="mt-2 text-lg text-zinc-400">{project.empresa}</p>}
-        {project.papel && <p className="mt-1 text-orange-400">{project.papel}</p>}
-      </FadeIn>
-
-      {project.stack?.length > 0 && (
-        <FadeIn delay={0.12} className="mt-8 flex flex-wrap gap-2">
-          {project.stack.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full border border-orange-500/20 bg-orange-500/10 px-3 py-1 text-sm text-orange-400"
+        <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-16 md:pb-24 md:pt-20">
+          <FadeIn>
+            <Link
+              href={`/${locale}/projetos`}
+              className="font-mono text-sm uppercase tracking-wider text-orange-400 hover:text-orange-300"
             >
-              {tag}
-            </span>
-          ))}
-        </FadeIn>
-      )}
+              ← {t('back')}
+            </Link>
+          </FadeIn>
 
-      {project.descricao && (
-        <FadeIn delay={0.16} className="mt-10">
-          <MarkdownContent content={project.descricao} />
-        </FadeIn>
-      )}
+          <div className="mt-10 grid items-start gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-14 xl:gap-20">
+            <FadeIn delay={0.06} className="min-w-0 order-2 lg:order-1">
+              <p className="font-mono text-sm uppercase tracking-[0.25em] text-zinc-600">
+                {t('preview')}
+              </p>
+              <h1 className="mt-3 text-[clamp(2.25rem,5.5vw,3.5rem)] font-bold leading-[1.05] tracking-[-0.03em] text-white">
+                {project.titulo}
+              </h1>
 
-      {project.metricas && project.metricas.length > 0 && (
-        <FadeIn delay={0.2} className="mt-10 grid gap-4 sm:grid-cols-2">
-          {project.metricas.map((m) => (
-            <div
-              key={m.label}
-              className="rounded-lg border border-zinc-800 border-l-2 border-l-orange-500 bg-zinc-900 p-4"
-            >
-              <p className="text-2xl font-bold text-orange-500">{m.valor}</p>
-              <p className="text-sm text-zinc-400">{m.label}</p>
-            </div>
-          ))}
-        </FadeIn>
-      )}
-
-      {galleryImages.length > 0 && (
-        <FadeIn delay={0.24} className="mt-10">
-          <h2 className="mb-4 text-lg font-semibold text-white">Galeria</h2>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {galleryImages.map((img, index) => (
-              <div
-                key={`${img}-${index}`}
-                className="relative aspect-video overflow-hidden rounded-xl border border-zinc-800"
-              >
-                <StorageImage
-                  path={img}
-                  alt={`${project.titulo} — ${index + 2}`}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 400px"
-                  className="object-cover"
-                />
+              <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-base text-zinc-400">
+                {project.empresa && <span>{project.empresa}</span>}
+                {project.periodo && (
+                  <>
+                    {project.empresa && <span className="text-zinc-700">·</span>}
+                    <span className="font-mono text-sm uppercase tracking-wider text-zinc-500">
+                      {project.periodo}
+                    </span>
+                  </>
+                )}
               </div>
-            ))}
-          </div>
-        </FadeIn>
-      )}
 
-      {project.url && (
-        <FadeIn delay={0.28}>
-          <a
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-10 inline-block rounded-lg bg-orange-500 px-6 py-3 text-white transition hover:bg-orange-600"
+              {project.papel && (
+                <p className="mt-3 font-mono text-base text-orange-400 md:text-lg">{project.papel}</p>
+              )}
+
+              {highlight && (
+                <p className="mt-6 border-l-2 border-orange-500/50 pl-4 text-base leading-relaxed text-zinc-300 md:text-lg">
+                  {highlight}
+                </p>
+              )}
+
+              {project.stack?.length > 0 && (
+                <div className="mt-8 flex flex-wrap gap-2">
+                  {project.stack.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-md border border-zinc-800 bg-zinc-950 px-3 py-1.5 font-mono text-xs text-zinc-500 md:text-sm"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {project.url && (
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-10 inline-flex items-center gap-2 rounded-lg bg-orange-500 px-6 py-3 text-base font-medium text-white transition hover:bg-orange-600"
+                >
+                  {t('viewLive')}
+                  <span aria-hidden>→</span>
+                </a>
+              )}
+            </FadeIn>
+
+            <FadeIn delay={0.12} className="order-1 lg:order-2 lg:pt-4">
+              <ProjectGalleryCarousel
+                items={galleryItems}
+                alt={project.titulo}
+                labels={{
+                  prev: t('carousel.prev'),
+                  next: t('carousel.next'),
+                  slide: t('carousel.slide'),
+                }}
+              />
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {(project.descricao || (project.metricas && project.metricas.length > 0)) && (
+        <section className="mx-auto max-w-7xl px-4 py-16 md:py-24">
+          <div
+            className={
+              project.descricao && project.metricas && project.metricas.length > 0
+                ? 'grid items-start gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20'
+                : project.descricao
+                  ? 'max-w-3xl'
+                  : undefined
+            }
           >
-            Ver projeto →
-          </a>
-        </FadeIn>
+            {project.descricao && (
+              <FadeIn>
+                <p className="font-mono text-sm uppercase tracking-[0.25em] text-zinc-600">
+                  {t('overview')}
+                </p>
+                <div className="mt-6">
+                  <MarkdownContent content={project.descricao} className="text-base md:text-lg" />
+                </div>
+              </FadeIn>
+            )}
+
+            {project.metricas && project.metricas.length > 0 && (
+              <FadeIn delay={project.descricao ? 0.08 : 0}>
+                {project.descricao && (
+                  <p className="font-mono text-sm uppercase tracking-[0.25em] text-zinc-600">
+                    {t('metrics')}
+                  </p>
+                )}
+                <div
+                  className={`grid gap-4 sm:grid-cols-2 ${project.descricao ? 'mt-6' : ''} ${
+                    !project.descricao ? 'lg:grid-cols-2 xl:grid-cols-4' : ''
+                  }`}
+                >
+                  {project.metricas.map((m) => (
+                    <div
+                      key={m.label}
+                      className="rounded-xl border border-zinc-800 border-l-2 border-l-orange-500 bg-zinc-900/60 p-5"
+                    >
+                      <p className="text-xl font-medium leading-snug text-orange-400">{m.label}</p>
+                      {m.valor ? (
+                        <p className="mt-1.5 text-base text-zinc-400">{m.valor}</p>
+                      ) : null}
+                    </div>
+                  ))}
+                </div>
+              </FadeIn>
+            )}
+          </div>
+        </section>
       )}
     </article>
   );

@@ -31,10 +31,64 @@ body {
   font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
 
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, rgb(39 39 42 / 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(39 39 42 / 0.35) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 20%, transparent 75%);
+}
+
+.dispatch-vertical {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.photo-scanline::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgb(0 0 0 / 0.03) 2px,
+    rgb(0 0 0 / 0.03) 4px
+  );
+  opacity: 0.6;
+}
+
+.ticker-mask {
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.ticker-track {
+  animation: ticker 40s linear infinite;
+}
+
+.ticker-track-slow {
+  animation: ticker 55s linear infinite;
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .ticker-track,
+  .ticker-track-slow {
+    animation: none;
   }
 }
 

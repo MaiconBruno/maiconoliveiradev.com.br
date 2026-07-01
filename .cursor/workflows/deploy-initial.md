@@ -1,5 +1,7 @@
 # Deploy inicial
 
+**Status (2026-06-30):** Código pronto para deploy. DNS, Vercel e Hostinger em configuração.
+
 ## Domínios
 
 - Site: `maiconoliveiradev.com.br` + `www` → **Vercel**
@@ -8,6 +10,8 @@
 ## Pré-requisitos
 
 - [x] Domínio definido
+- [x] Código MVP (apps/web + apps/api)
+- [x] Scripts deploy Hostinger (`deploy-hostinger.sh`)
 - [ ] DNS `@`/`www` → Vercel; `admin` → Hostinger
 - [ ] MySQL criado no hPanel
 - [ ] `DEEPL_API_KEY` (DeepL Free)
