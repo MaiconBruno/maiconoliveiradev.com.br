@@ -12,8 +12,10 @@ class DeepLTranslationService
 
     public function __construct(?Client $client = null)
     {
+        $baseUrl = config('services.deepl.url', 'https://api-free.deepl.com');
+
         $this->client = $client ?? new Client([
-            'base_uri' => 'https://api-free.deepl.com/v2/',
+            'base_uri' => rtrim($baseUrl, '/').'/v2/',
             'timeout' => 15,
         ]);
     }
@@ -50,8 +52,10 @@ class DeepLTranslationService
 
         try {
             $response = $this->client->post('translate', [
+                'headers' => [
+                    'Authorization' => 'DeepL-Auth-Key '.$apiKey,
+                ],
                 'form_params' => [
-                    'auth_key' => $apiKey,
                     'text' => $text,
                     'source_lang' => strtoupper($sourceLang),
                     'target_lang' => strtoupper($targetLang),
