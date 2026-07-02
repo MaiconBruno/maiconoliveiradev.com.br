@@ -1,6 +1,12 @@
 import { getTranslations } from 'next-intl/server';
-import { JsonLd } from '@/components/JsonLd';
+import { CertificationsPanel, EducationPanel } from '@/components/about/AboutPanels';
+import { FadeIn } from '@/components/FadeIn';
+import { MarkdownContent } from '@/components/MarkdownContent';
+import { ChapterSection } from '@/components/home/ChapterSection';
+import { ContactBand } from '@/components/home/ContactBand';
 import { ExperienceLog } from '@/components/home/ExperienceLog';
+import { SkillsManifest } from '@/components/home/SkillsManifest';
+import { JsonLd } from '@/components/JsonLd';
 import { buildPersonJsonLd } from '@/lib/json-ld';
 import { getSeoMetadata } from '@/lib/seo';
 import { fetchApi, getSiteUrl } from '@/lib/utils';
@@ -23,6 +29,7 @@ function experienceLabels(t: Awaited<ReturnType<typeof getTranslations>>) {
     mode: t('home.experience.mode'),
     stack: t('home.experience.stack'),
     scope: t('home.experience.scope'),
+    signals: t('home.experience.signals'),
     more: t('home.experience.more'),
     progression: t('home.experience.progression'),
   };
@@ -52,64 +59,109 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
     pageUrl,
   });
 
+  const hasEducation = education.length > 0;
+  const hasCertifications = certifications.length > 0;
+  const hasSkills = skills.some((g) => g.skills.length > 0);
+
+  let chapterIndex = 0;
+  const nextChapter = () => String(++chapterIndex).padStart(2, '0');
+
   return (
-    <>
+    <div className="relative">
       <JsonLd data={jsonLd} />
 
-      <div className="mx-auto max-w-4xl px-4 py-16">
-        <h1 className="mb-8 text-3xl font-bold text-white">{t('about.title')}</h1>
-        {profile.bio_longa && (
-          <p className="mb-16 whitespace-pre-line leading-relaxed text-zinc-400">{profile.bio_longa}</p>
-        )}
+      <section className="relative overflow-hidden border-b border-zinc-800/60">
+        <div className="bg-grid-pattern pointer-events-none absolute inset-0" aria-hidden />
+        <div
+          className="pointer-events-none absolute -right-24 top-0 h-80 w-80 rounded-full bg-orange-500/5 blur-3xl"
+          aria-hidden
+        />
 
-        <section id="experiencias" className="mb-16 scroll-mt-24">
-          <h2 className="mb-8 text-xl font-semibold text-white">{t('about.experience')}</h2>
+        <span
+          className="pointer-events-none absolute right-4 top-20 hidden select-none font-mono text-[clamp(5rem,16vw,10rem)] font-bold leading-none tracking-tighter text-zinc-900/90 md:right-8 lg:block"
+          aria-hidden
+        >
+          03
+        </span>
+
+        <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-16 md:pb-16 md:pt-24">
+          <FadeIn>
+            <h1 className="text-[clamp(2.25rem,6vw,3.75rem)] font-bold leading-[1.05] tracking-[-0.03em] text-white">
+              {t('about.title')}
+            </h1>
+            {profile.bio_longa && (
+              <div className="mt-8 max-w-3xl">
+                <MarkdownContent content={profile.bio_longa} className="text-base md:text-lg" />
+              </div>
+            )}
+          </FadeIn>
+        </div>
+      </section>
+
+      {experiences.length > 0 && (
+        <ChapterSection
+          id="experiencias"
+          chapter={nextChapter()}
+          eyebrow={t('about.chapters.track.eyebrow')}
+          title={t('about.experience')}
+          fullBleed
+          className="scroll-mt-24"
+        >
           <ExperienceLog
             experiences={experiences}
             locale={locale}
             labels={experienceLabels(t)}
             totalCount={experiences.length}
           />
-        </section>
+        </ChapterSection>
+      )}
 
-        <section className="mb-16">
-          <h2 className="mb-8 text-xl font-semibold text-white">{t('about.education')}</h2>
-          <ul className="space-y-4">
-            {education.map((edu) => (
-              <li
-                key={`${edu.instituicao}-${edu.periodo}`}
-                className="rounded-lg border border-zinc-800 bg-zinc-900 p-4"
-              >
-                <p className="font-medium text-white">{edu.grau}</p>
-                <p className="text-sm text-zinc-400">
-                  {edu.instituicao} · {edu.periodo}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </section>
+      {hasEducation && (
+        <ChapterSection
+          id="formacao"
+          chapter={nextChapter()}
+          eyebrow={t('about.chapters.education.eyebrow')}
+          title={t('about.education')}
+        >
+          <EducationPanel education={education} panelLabel={t('about.panels.education')} />
+        </ChapterSection>
+      )}
 
-        <section className="mb-16">
-          <h2 className="mb-8 text-xl font-semibold text-white">{t('about.certifications')}</h2>
-          <ul className="list-disc space-y-2 pl-5 text-zinc-400">
-            {certifications.map((cert) => (
-              <li key={cert.titulo}>{cert.titulo}</li>
-            ))}
-          </ul>
-        </section>
+      {hasCertifications && (
+        <ChapterSection
+          id="certificacoes"
+          chapter={nextChapter()}
+          eyebrow={t('about.chapters.certs.eyebrow')}
+          title={t('about.certifications')}
+        >
+          <CertificationsPanel
+            certifications={certifications}
+            panelLabel={t('about.panels.certifications')}
+          />
+        </ChapterSection>
+      )}
 
-        <section>
-          <h2 className="mb-8 text-xl font-semibold text-white">{t('sections.skills')}</h2>
-          {skills.map((group) => (
-            <div key={group.categoria} className="mb-6">
-              <h3 className="mb-2 text-sm font-medium uppercase tracking-wider text-orange-400">
-                {group.categoria}
-              </h3>
-              <p className="text-zinc-400">{group.skills.map((s) => s.nome).join(' · ')}</p>
-            </div>
-          ))}
-        </section>
-      </div>
-    </>
+      {hasSkills && (
+        <ChapterSection
+          id="skills"
+          chapter={nextChapter()}
+          eyebrow={t('about.chapters.stack.eyebrow')}
+          title={t('sections.skills')}
+        >
+          <SkillsManifest
+            skills={skills}
+            tickerLabel={t('home.stackTicker')}
+            featuredOnly={false}
+          />
+        </ChapterSection>
+      )}
+
+      <ContactBand
+        locale={locale}
+        eyebrow={t('home.contactBand.eyebrow')}
+        formLink={t('home.contactBand.formLink')}
+        email={contact.email}
+      />
+    </div>
   );
 }

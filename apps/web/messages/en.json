@@ -17,6 +17,8 @@
     "social": "Social links"
   },
   "contact": {
+    "eyebrow": "04 · Contact",
+    "formEyebrow": "Form",
     "title": "Contact",
     "subtitle": "Send a message or connect on social media.",
     "name": "Name",
@@ -29,9 +31,20 @@
   },
   "about": {
     "title": "About",
+    "eyebrow": "03 · Profile",
     "experience": "Experience",
     "education": "Education",
-    "certifications": "Certifications"
+    "certifications": "Certifications",
+    "chapters": {
+      "track": { "eyebrow": "Trajectory" },
+      "education": { "eyebrow": "Education" },
+      "certs": { "eyebrow": "Credentials" },
+      "stack": { "eyebrow": "Toolkit" }
+    },
+    "panels": {
+      "education": "education.json",
+      "certifications": "credentials.json"
+    }
   },
   "projects": {
     "title": "Projects",
@@ -66,10 +79,11 @@
       "work": "Work",
       "track": "Track",
       "stack": "Stack",
-      "contact": "Contact"
+      "contact": "Contact",
+      "ariaLabel": "Page sections"
     },
     "briefing": {
-      "label": "Operating context",
+      "label": "Profile",
       "base": "Base",
       "mode": "Mode",
       "tenure": "Tenure"
