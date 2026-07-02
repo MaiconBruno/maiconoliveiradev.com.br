@@ -6,6 +6,11 @@ interface Experience {
     id: number;
     empresa: string;
     cargo: { pt?: string | null; en?: string | null };
+    progressao?: Array<{
+        cargo?: { pt?: string | null; en?: string | null };
+        periodo_inicio?: string | null;
+        periodo_fim?: string | null;
+    }> | null;
     periodo_inicio: string | null;
     periodo_fim: string | null;
     modelo: string | null;

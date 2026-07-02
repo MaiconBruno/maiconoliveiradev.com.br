@@ -18,9 +18,16 @@ export interface MetricaItem {
     valor: string;
 }
 
+export interface ProgressaoItem {
+    cargo: BilingualField;
+    periodo_inicio: string;
+    periodo_fim: string;
+}
+
 export interface ExperienceFormData {
     empresa: string;
     cargo: BilingualField;
+    progressao: ProgressaoItem[];
     periodo_inicio: string;
     periodo_fim: string;
     modelo: string;
@@ -50,6 +57,10 @@ function emptyResponsabilidade(): ResponsabilidadeItem {
 
 function emptyMetrica(): MetricaItem {
     return { label: { pt: '', en: '' }, valor: '' };
+}
+
+function emptyProgressao(): ProgressaoItem {
+    return { cargo: { pt: '', en: '' }, periodo_inicio: '', periodo_fim: '' };
 }
 
 export default function ExperienceForm({
@@ -114,6 +125,27 @@ export default function ExperienceForm({
         );
     };
 
+    const addProgressao = () => {
+        setData('progressao', [...data.progressao, emptyProgressao()]);
+    };
+
+    const removeProgressao = (index: number) => {
+        setData(
+            'progressao',
+            data.progressao.filter((_, i) => i !== index)
+        );
+    };
+
+    const updateProgressao = (
+        index: number,
+        field: 'periodo_inicio' | 'periodo_fim',
+        value: string
+    ) => {
+        const updated = [...data.progressao];
+        updated[index] = { ...updated[index], [field]: value };
+        setData('progressao', updated);
+    };
+
     const fieldError = (key: string) =>
         (errors as Record<string, string>)[key] ? (
             <p className="mt-1 text-sm text-red-400">{(errors as Record<string, string>)[key]}</p>
@@ -137,6 +169,12 @@ export default function ExperienceForm({
             }
         });
 
+        data.progressao.forEach((item, index) => {
+            if (item.cargo.pt.trim()) {
+                fields[`progressao.${index}.cargo`] = item.cargo.pt;
+            }
+        });
+
         return fields;
     };
 
@@ -155,6 +193,12 @@ export default function ExperienceForm({
         data.metricas.forEach((item, index) => {
             if (item.label.en.trim()) {
                 fields[`metricas.${index}.label`] = item.label.en;
+            }
+        });
+
+        data.progressao.forEach((item, index) => {
+            if (item.cargo.en.trim()) {
+                fields[`progressao.${index}.cargo`] = item.cargo.en;
             }
         });
 
@@ -190,6 +234,20 @@ export default function ExperienceForm({
                 return {
                     ...item,
                     label: { ...item.label, en: translations[key] },
+                };
+            })
+        );
+
+        setData(
+            'progressao',
+            data.progressao.map((item, index) => {
+                const key = `progressao.${index}.cargo`;
+                if (translations[key] === undefined) {
+                    return item;
+                }
+                return {
+                    ...item,
+                    cargo: { ...item.cargo, en: translations[key] },
                 };
             })
         );
@@ -276,6 +334,91 @@ export default function ExperienceForm({
                         </select>
                         {fieldError('tipo')}
                     </div>
+                </div>
+            </section>
+
+            <section className="rounded-lg border border-zinc-800 bg-zinc-900 p-6">
+                <div className="mb-4 flex items-center justify-between">
+                    <div>
+                        <h2 className="text-lg font-semibold text-zinc-50">Progressão de cargo</h2>
+                        <p className="mt-1 text-sm text-zinc-500">
+                            Etapas na mesma empresa (ex.: Jr → Pleno). Com 2 ou mais etapas, o site
+                            exibe uma timeline.
+                        </p>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={addProgressao}
+                        className="shrink-0 rounded-md border border-zinc-700 px-3 py-1.5 text-sm text-zinc-300 hover:border-orange-500 hover:text-orange-400"
+                    >
+                        Adicionar etapa
+                    </button>
+                </div>
+                {data.progressao.length === 0 && (
+                    <p className="text-sm text-zinc-500">
+                        Nenhuma etapa adicionada. Use o cargo principal acima se houve apenas um
+                        papel na empresa.
+                    </p>
+                )}
+                <div className="space-y-4">
+                    {data.progressao.map((item, index) => (
+                        <div
+                            key={index}
+                            className="rounded-lg border border-zinc-800 bg-zinc-950 p-4"
+                        >
+                            <LocaleField
+                                label={`Etapa ${index + 1}`}
+                                value={item.cargo}
+                                onChange={(cargo) => {
+                                    const updated = [...data.progressao];
+                                    updated[index] = { ...updated[index], cargo };
+                                    setData('progressao', updated);
+                                }}
+                                error={
+                                    (errors as Record<string, string>)[
+                                        `progressao.${index}.cargo.pt`
+                                    ]
+                                }
+                            />
+                            <div className="mt-3 grid gap-3 md:grid-cols-2">
+                                <div>
+                                    <label className={labelClass}>Período início</label>
+                                    <input
+                                        type="text"
+                                        placeholder="2019-10"
+                                        value={item.periodo_inicio}
+                                        onChange={(e) =>
+                                            updateProgressao(index, 'periodo_inicio', e.target.value)
+                                        }
+                                        className={inputClass}
+                                    />
+                                    {fieldError(`progressao.${index}.periodo_inicio`)}
+                                </div>
+                                <div>
+                                    <label className={labelClass}>Período fim (vazio = atual)</label>
+                                    <input
+                                        type="text"
+                                        placeholder="2021-01"
+                                        value={item.periodo_fim}
+                                        onChange={(e) =>
+                                            updateProgressao(index, 'periodo_fim', e.target.value)
+                                        }
+                                        className={inputClass}
+                                    />
+                                    {fieldError(`progressao.${index}.periodo_fim`)}
+                                </div>
+                            </div>
+                            <div className="mt-3 flex justify-end">
+                                <button
+                                    type="button"
+                                    onClick={() => removeProgressao(index)}
+                                    className="text-sm text-red-400 hover:text-red-300"
+                                >
+                                    Remover etapa
+                                </button>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </section>
 
@@ -474,6 +617,7 @@ export function defaultExperienceFormData(): ExperienceFormData {
     return {
         empresa: '',
         cargo: { pt: '', en: '' },
+        progressao: [],
         periodo_inicio: '',
         periodo_fim: '',
         modelo: '',
@@ -490,6 +634,11 @@ export function defaultExperienceFormData(): ExperienceFormData {
 export function experienceToFormData(experience: {
     empresa: string;
     cargo: { pt?: string | null; en?: string | null };
+    progressao?: Array<{
+        cargo?: { pt?: string | null; en?: string | null };
+        periodo_inicio?: string | null;
+        periodo_fim?: string | null;
+    }> | null;
     periodo_inicio: string | null;
     periodo_fim: string | null;
     modelo: string | null;
@@ -510,6 +659,14 @@ export function experienceToFormData(experience: {
             pt: experience.cargo?.pt ?? '',
             en: experience.cargo?.en ?? '',
         },
+        progressao: (experience.progressao ?? []).map((item) => ({
+            cargo: {
+                pt: item.cargo?.pt ?? '',
+                en: item.cargo?.en ?? '',
+            },
+            periodo_inicio: item.periodo_inicio ?? '',
+            periodo_fim: item.periodo_fim ?? '',
+        })),
         periodo_inicio: experience.periodo_inicio ?? '',
         periodo_fim: experience.periodo_fim ?? '',
         modelo: experience.modelo ?? '',
