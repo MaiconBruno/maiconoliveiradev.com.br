@@ -97,14 +97,16 @@ function FeaturedProjectCard({
 
       <ProjectCover project={project} priority />
 
-      <CardGlassBody className="flex flex-col gap-5 p-6 md:gap-6 md:p-8">
-        <div className="flex items-start justify-between gap-4">
-          <div>
+      <CardGlassBody className="flex flex-col gap-6 p-7 md:gap-8 md:p-10">
+        <div className="flex items-start justify-between gap-5">
+          <div className="space-y-4">
             <ProjectIndex n={index} />
-            <h3 className="mt-3 text-2xl font-semibold tracking-tight text-white transition group-hover:text-orange-400">
-              {project.titulo}
-            </h3>
-            {project.empresa && <p className="mt-2 text-sm text-zinc-500">{project.empresa}</p>}
+            <div>
+              <h3 className="text-2xl font-semibold tracking-tight text-white transition group-hover:text-orange-400">
+                {project.titulo}
+              </h3>
+              {project.empresa && <p className="mt-3 text-sm text-zinc-500">{project.empresa}</p>}
+            </div>
           </div>
           {project.papel && (
             <span className="shrink-0 rounded-full border border-orange-500/25 bg-orange-500/10 px-3 py-1 text-xs text-orange-400 backdrop-blur-sm">
@@ -114,15 +116,19 @@ function FeaturedProjectCard({
         </div>
 
         {project.descricao && (
-          <p className="line-clamp-2 text-sm leading-relaxed text-zinc-400">{project.descricao}</p>
+          <p className="line-clamp-2 text-sm leading-relaxed text-zinc-400 md:text-base md:leading-relaxed">
+            {project.descricao}
+          </p>
         )}
 
         {highlight && (
-          <p className="border-l-2 border-orange-500/50 pl-3 text-sm text-zinc-300">{highlight}</p>
+          <p className="mt-2 border-l-2 border-orange-500/50 py-1 pl-4 text-sm leading-relaxed text-zinc-300 md:mt-4">
+            {highlight}
+          </p>
         )}
 
         {project.stack?.length > 0 && (
-          <div className="mt-auto flex flex-wrap gap-2 pt-1">
+          <div className="mt-auto flex flex-wrap gap-2.5 pt-2">
             {project.stack.slice(0, 6).map((tag) => (
               <span
                 key={tag}
@@ -134,7 +140,7 @@ function FeaturedProjectCard({
           </div>
         )}
 
-        <span className="inline-flex items-center gap-2 border-t border-zinc-800/60 pt-5 font-mono text-xs uppercase tracking-wider text-orange-500">
+        <span className="inline-flex items-center gap-2 border-t border-zinc-800/60 pt-6 font-mono text-xs uppercase tracking-wider text-orange-500 md:pt-7">
           {label}
           <span className="transition-transform group-hover:translate-x-1">→</span>
         </span>
@@ -168,17 +174,19 @@ function CompactProjectCard({
         className="aspect-[2.2/1] max-h-[100px] shrink-0 sm:max-h-[110px]"
       />
 
-      <CardGlassBody className="flex flex-1 flex-col gap-4 p-5 md:p-6">
-        <div>
+      <CardGlassBody className="flex flex-1 flex-col gap-5 p-6 md:gap-6 md:p-7">
+        <div className="space-y-3">
           <ProjectIndex n={index} />
-          <h3 className="mt-3 text-lg font-semibold text-white transition group-hover:text-orange-400">
-            {project.titulo}
-          </h3>
-          {project.empresa && <p className="mt-2 text-xs text-zinc-500">{project.empresa}</p>}
+          <div>
+            <h3 className="text-lg font-semibold text-white transition group-hover:text-orange-400">
+              {project.titulo}
+            </h3>
+            {project.empresa && <p className="mt-3 text-xs text-zinc-500">{project.empresa}</p>}
+          </div>
         </div>
 
         {project.stack?.length > 0 && (
-          <p className="mt-auto truncate font-mono text-[11px] text-zinc-600">
+          <p className="mt-auto truncate pt-2 font-mono text-[11px] text-zinc-600">
             {project.stack.slice(0, 4).join(' · ')}
           </p>
         )}

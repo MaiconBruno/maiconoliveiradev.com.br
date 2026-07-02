@@ -1,15 +1,11 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { FadeIn } from '@/components/FadeIn';
 import { GitHubIcon, LinkedInIcon, MailIcon } from '@/components/icons/SocialIcons';
+import RecaptchaCheckbox, { type RecaptchaCheckboxHandle } from '@/components/RecaptchaCheckbox';
 import type { Contact, ContactFormPayload } from '@portfolio/types';
-
-const API_URL =
-  typeof window !== 'undefined'
-    ? (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000')
-    : (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000');
 
 const inputClassName =
   'w-full rounded-lg border border-zinc-800 bg-zinc-900/80 px-4 py-3 text-sm text-white placeholder:text-zinc-600 backdrop-blur-sm transition focus:border-orange-500/50 focus:outline-none focus:ring-1 focus:ring-orange-500/30';
@@ -20,11 +16,19 @@ export default function ContactForm({ contact }: { contact: Contact }) {
   const t = useTranslations('contact');
   const tSections = useTranslations('sections');
   const locale = useLocale();
-  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const recaptchaRef = useRef<RecaptchaCheckboxHandle>(null);
+  const [recaptchaToken, setRecaptchaToken] = useState('');
+  const [status, setStatus] = useState<'idle' | 'success' | 'error' | 'recaptcha'>('idle');
   const [loading, setLoading] = useState(false);
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!recaptchaToken) {
+      setStatus('recaptcha');
+      return;
+    }
+
     setLoading(true);
     setStatus('idle');
     const form = new FormData(e.currentTarget);
@@ -33,10 +37,11 @@ export default function ContactForm({ contact }: { contact: Contact }) {
       email: String(form.get('email')),
       subject: String(form.get('subject') || '') || undefined,
       message: String(form.get('message')),
+      recaptcha_token: recaptchaToken,
       _honeypot: String(form.get('_honeypot') || '') || undefined,
     };
     try {
-      const res = await fetch(`${API_URL}/api/v1/contact`, {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,10 +50,20 @@ export default function ContactForm({ contact }: { contact: Contact }) {
         },
         body: JSON.stringify(payload),
       });
-      setStatus(res.ok ? 'success' : 'error');
-      if (res.ok) e.currentTarget.reset();
+      if (res.ok) {
+        setStatus('success');
+        e.currentTarget.reset();
+        setRecaptchaToken('');
+        recaptchaRef.current?.reset();
+      } else {
+        setStatus('error');
+        recaptchaRef.current?.reset();
+        setRecaptchaToken('');
+      }
     } catch {
       setStatus('error');
+      recaptchaRef.current?.reset();
+      setRecaptchaToken('');
     } finally {
       setLoading(false);
     }
@@ -166,6 +181,12 @@ export default function ContactForm({ contact }: { contact: Contact }) {
               />
             </div>
 
+            <RecaptchaCheckbox
+              ref={recaptchaRef}
+              onChange={setRecaptchaToken}
+              onExpire={() => setRecaptchaToken('')}
+            />
+
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <button
                 type="submit"
@@ -177,6 +198,9 @@ export default function ContactForm({ contact }: { contact: Contact }) {
 
               {status === 'success' && (
                 <p className="font-mono text-sm text-green-400">{t('success')}</p>
+              )}
+              {status === 'recaptcha' && (
+                <p className="font-mono text-sm text-red-400">{t('recaptchaRequired')}</p>
               )}
               {status === 'error' && (
                 <p className="font-mono text-sm text-red-400">{t('error')}</p>

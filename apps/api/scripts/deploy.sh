@@ -71,4 +71,7 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
+echo "→ CORS (origens permitidas na API pública)"
+php artisan tinker --execute="echo implode(PHP_EOL, config('cors.allowed_origins'));" 2>/dev/null || true
+
 echo "✓ Deploy concluído"

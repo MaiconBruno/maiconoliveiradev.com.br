@@ -45,7 +45,7 @@ export function ProofStrip({
   return (
     <div className="border-b border-zinc-800/60 bg-zinc-950/80">
       <div className="mx-auto flex max-w-7xl items-center gap-6 px-4 py-4">
-        <span className="hidden shrink-0 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-600 sm:block">
+        <span className="hidden shrink-0 border-r border-zinc-800 pr-6 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-600 sm:block">
           {label}
         </span>
         <div className="ticker-mask relative min-w-0 flex-1 overflow-hidden">

@@ -27,7 +27,8 @@
     "message": "Message",
     "send": "Send message",
     "success": "Message sent successfully!",
-    "error": "Failed to send. Please try again."
+    "error": "Failed to send. Please try again.",
+    "recaptchaRequired": "Please confirm you are not a robot."
   },
   "about": {
     "title": "About",
@@ -72,7 +73,6 @@
   },
   "home": {
     "dispatchLabel": "Dispatch · 2026",
-    "proofStrip": "Signals",
     "stackTicker": "Runtime",
     "nav": {
       "brief": "Brief",

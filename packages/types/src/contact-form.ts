@@ -3,6 +3,7 @@ export type ContactFormPayload = {
   email: string;
   subject?: string;
   message: string;
+  recaptcha_token: string;
   _honeypot?: string;
 };
 
