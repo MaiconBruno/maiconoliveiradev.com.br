@@ -73,7 +73,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         }}
       />
 
-      <ProofStrip projects={projects} label={t('home.proofStrip')} />
+      <ProofStrip projects={projects} label={t('projects.metrics')} />
 
       <ChapterSection
         id="work"

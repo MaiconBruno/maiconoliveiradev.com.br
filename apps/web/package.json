@@ -14,6 +14,7 @@
   "dependencies": {
     "@portfolio/types": "file:../../packages/types",
     "@swc/helpers": "^0.5.23",
+    "@vercel/speed-insights": "^2.0.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.42.0",
     "next": "15.5.19",

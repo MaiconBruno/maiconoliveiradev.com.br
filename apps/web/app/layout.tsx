@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { getSiteUrl } from '@/lib/utils';
 import './globals.css';
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt" className="dark">
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );

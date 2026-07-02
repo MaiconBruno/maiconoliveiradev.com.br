@@ -40,4 +40,8 @@ return [
         'url' => rtrim(env('DEEPL_API_URL', 'https://api-free.deepl.com'), '/'),
     ],
 
+    'recaptcha' => [
+        'secret' => env('RECAPTCHA_SECRET_KEY'),
+    ],
+
 ];
