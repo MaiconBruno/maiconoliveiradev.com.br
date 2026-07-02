@@ -31,7 +31,8 @@ export default function ContactForm({ contact }: { contact: Contact }) {
 
     setLoading(true);
     setStatus('idle');
-    const form = new FormData(e.currentTarget);
+    const formEl = e.currentTarget;
+    const form = new FormData(formEl);
     const payload: ContactFormPayload = {
       name: String(form.get('name')),
       email: String(form.get('email')),
@@ -52,7 +53,7 @@ export default function ContactForm({ contact }: { contact: Contact }) {
       });
       if (res.ok) {
         setStatus('success');
-        e.currentTarget.reset();
+        formEl.reset();
         setRecaptchaToken('');
         recaptchaRef.current?.reset();
       } else {
