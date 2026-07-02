@@ -35,12 +35,12 @@ function LogPeriod({
   );
 }
 
-function LogSignals({ metrics }: { metrics: Metrica[] }) {
+function LogSignals({ metrics, label }: { metrics: Metrica[]; label: string }) {
   if (metrics.length === 0) return null;
 
   return (
     <p className="leading-relaxed">
-      <span className="text-zinc-600">signals:</span>{' '}
+      <span className="text-zinc-600">{label}:</span>{' '}
       {metrics.map((metric, index) => {
         const primary = metric.valor?.trim() || metric.label;
         const secondary = metric.valor?.trim() ? metric.label : null;
@@ -73,6 +73,7 @@ function LogEntry({
     mode: string;
     stack: string;
     scope: string;
+    signals: string;
     progression: string;
   };
 }) {
@@ -139,7 +140,9 @@ function LogEntry({
           </p>
         )}
 
-        {exp.metricas && exp.metricas.length > 0 && <LogSignals metrics={exp.metricas} />}
+        {exp.metricas && exp.metricas.length > 0 && (
+          <LogSignals metrics={exp.metricas} label={labels.signals} />
+        )}
       </div>
     </article>
   );
@@ -166,6 +169,7 @@ export function ExperienceLog({
     mode: string;
     stack: string;
     scope: string;
+    signals: string;
     more: string;
     progression: string;
   };

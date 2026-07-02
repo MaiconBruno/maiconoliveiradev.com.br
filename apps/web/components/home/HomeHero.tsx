@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { FadeIn } from '@/components/FadeIn';
+import { GitHubIcon, LinkedInIcon, MailIcon } from '@/components/icons/SocialIcons';
 import { StorageImage } from '@/components/StorageImage';
 import type { Contact, Profile } from '@portfolio/types';
 
@@ -36,9 +37,6 @@ function ContextBriefing({
           </div>
         ))}
       </dl>
-      <p className="mt-4 border-t border-zinc-800 pt-4 text-xs leading-relaxed text-zinc-500">
-        {profile.headline}
-      </p>
     </div>
   );
 }
@@ -90,13 +88,13 @@ export function HomeHero({
       </span>
 
       <p
-        className="dispatch-vertical pointer-events-none absolute left-3 top-1/2 hidden -translate-y-1/2 font-mono text-[10px] uppercase tracking-[0.35em] text-zinc-700 lg:block"
+        className="dispatch-vertical pointer-events-none absolute left-3 top-1/2 hidden -translate-y-1/2 font-mono text-[10px] uppercase tracking-[0.35em] text-zinc-700 lg:block xl:hidden"
         aria-hidden
       >
         {dispatchLabel}
       </p>
 
-      <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-16 md:pb-28 md:pt-24 xl:pl-16">
+      <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-16 md:pb-28 md:pt-24">
         <FadeIn>
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-zinc-500">
             {profile.localizacao}
@@ -149,14 +147,15 @@ export function HomeHero({
               </Link>
             </FadeIn>
 
-            <FadeIn delay={0.3} className="mt-10 flex flex-wrap gap-5 border-t border-zinc-800/80 pt-8">
+            <FadeIn delay={0.3} className="mt-10 flex flex-wrap items-center gap-5 border-t border-zinc-800/80 pt-8">
               {contact.linkedin && (
                 <a
                   href={contact.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-mono text-xs uppercase tracking-wider text-zinc-500 transition hover:text-orange-400"
+                  className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-zinc-500 transition hover:text-orange-400"
                 >
+                  <LinkedInIcon className="h-4 w-4 shrink-0" />
                   LinkedIn
                 </a>
               )}
@@ -165,15 +164,17 @@ export function HomeHero({
                   href={contact.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-mono text-xs uppercase tracking-wider text-zinc-500 transition hover:text-orange-400"
+                  className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-zinc-500 transition hover:text-orange-400"
                 >
+                  <GitHubIcon className="h-4 w-4 shrink-0" />
                   GitHub
                 </a>
               )}
               <a
                 href={`mailto:${contact.email}`}
-                className="font-mono text-xs uppercase tracking-wider text-zinc-500 transition hover:text-orange-400"
+                className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-zinc-500 transition hover:text-orange-400"
               >
+                <MailIcon className="h-4 w-4 shrink-0" />
                 {contact.email}
               </a>
             </FadeIn>

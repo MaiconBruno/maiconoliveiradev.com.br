@@ -17,6 +17,8 @@
     "social": "Redes sociais"
   },
   "contact": {
+    "eyebrow": "04 · Contato",
+    "formEyebrow": "Formulário",
     "title": "Contato",
     "subtitle": "Envie uma mensagem ou conecte nas redes sociais.",
     "name": "Nome",
@@ -29,9 +31,20 @@
   },
   "about": {
     "title": "Sobre",
+    "eyebrow": "03 · Perfil",
     "experience": "Experiências",
     "education": "Formação",
-    "certifications": "Certificações"
+    "certifications": "Certificações",
+    "chapters": {
+      "track": { "eyebrow": "Trajetória" },
+      "education": { "eyebrow": "Formação" },
+      "certs": { "eyebrow": "Credenciais" },
+      "stack": { "eyebrow": "Toolkit" }
+    },
+    "panels": {
+      "education": "education.json",
+      "certifications": "credentials.json"
+    }
   },
   "projects": {
     "title": "Projetos",
@@ -62,14 +75,15 @@
     "proofStrip": "Sinais",
     "stackTicker": "Runtime",
     "nav": {
-      "brief": "Brief",
-      "work": "Work",
-      "track": "Track",
+      "brief": "Resumo",
+      "work": "Projetos",
+      "track": "Trajetória",
       "stack": "Stack",
-      "contact": "Contact"
+      "contact": "Contato",
+      "ariaLabel": "Seções da página"
     },
     "briefing": {
-      "label": "Contexto operacional",
+      "label": "Perfil",
       "base": "Base",
       "mode": "Modo",
       "tenure": "Tempo"
@@ -91,13 +105,13 @@
       "remote": "Remoto",
       "onsite": "Presencial",
       "hybrid": "Híbrido",
-      "logTitle": "track.log",
+      "logTitle": "trajetória.log",
       "entries": "entradas",
       "active": "ativo",
       "mode": "modo",
-      "stack": "stack",
+      "stack": "tecnologias",
       "scope": "escopo",
-      "signals": "sinais",
+      "signals": "métricas",
       "more": "mais entradas",
       "progression": "progressão"
     }

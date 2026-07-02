@@ -5,14 +5,16 @@ import type { SkillGroup } from '@portfolio/types';
 export function SkillsManifest({
   skills,
   tickerLabel,
+  featuredOnly = true,
 }: {
   skills: SkillGroup[];
   tickerLabel: string;
+  featuredOnly?: boolean;
 }) {
   const featuredGroups = skills
     .map((group) => ({
       ...group,
-      skills: group.skills.filter((s) => s.destaque),
+      skills: featuredOnly ? group.skills.filter((s) => s.destaque) : group.skills,
     }))
     .filter((group) => group.skills.length > 0);
 

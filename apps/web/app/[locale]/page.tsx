@@ -51,13 +51,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     ...(skills.some((g) => g.skills.some((s) => s.destaque))
       ? [{ id: 'stack', label: t('home.nav.stack') }]
       : []),
-    { id: 'contact', label: t('home.nav.contact') },
   ];
 
   return (
     <div className="relative">
       <JsonLd data={jsonLd} />
-      <HomeSectionNav sections={navSections} />
+      <HomeSectionNav sections={navSections} ariaLabel={t('home.nav.ariaLabel')} />
 
       <HomeHero
         profile={profile}
@@ -118,6 +117,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               mode: t('home.experience.mode'),
               stack: t('home.experience.stack'),
               scope: t('home.experience.scope'),
+              signals: t('home.experience.signals'),
               more: t('home.experience.more'),
               progression: t('home.experience.progression'),
             }}
