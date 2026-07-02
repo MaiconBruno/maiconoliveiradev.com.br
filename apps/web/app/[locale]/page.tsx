@@ -8,7 +8,7 @@ import { ProjectsBento } from '@/components/home/ProjectsBento';
 import { ProofStrip } from '@/components/home/ProofStrip';
 import { SkillsManifest } from '@/components/home/SkillsManifest';
 import { JsonLd } from '@/components/JsonLd';
-import { buildPersonJsonLd } from '@/lib/json-ld';
+import { buildHomeJsonLd } from '@/lib/json-ld';
 import { getSeoMetadata } from '@/lib/seo';
 import { fetchApi, getSiteUrl } from '@/lib/utils';
 import type { Contact, Education, Experience, Profile, Project, SkillGroup } from '@portfolio/types';
@@ -35,13 +35,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   const experiences = allExperiences.slice(0, HOME_EXPERIENCE_LIMIT);
   const pageUrl = `${getSiteUrl()}/${locale}`;
-  const jsonLd = buildPersonJsonLd({
+  const jsonLd = buildHomeJsonLd({
     profile,
     experiences: allExperiences,
     contact,
     education,
     skills,
     pageUrl,
+    locale,
   });
 
   const navSections = [
