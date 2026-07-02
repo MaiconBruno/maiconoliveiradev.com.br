@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Mail\ContactFormSubmitted;
 use App\Models\Contact;
 use App\Rules\ValidRecaptcha;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Throwable;
 
 class ContactController extends BaseApiController
 {
@@ -50,6 +53,29 @@ class ContactController extends BaseApiController
         }
 
         $data = $validator->validated();
+
+        $recipient = config('mail.to.address');
+        if (! is_string($recipient) || trim($recipient) === '') {
+            Log::error('Contact form: MAIL_TO_ADDRESS not configured');
+
+            return response()->json(['message' => 'Service unavailable'], 503);
+        }
+
+        try {
+            Mail::to($recipient)->send(new ContactFormSubmitted(
+                senderName: $data['name'],
+                senderEmail: $data['email'],
+                subjectLine: $data['subject'] ?? null,
+                body: $data['message'],
+            ));
+        } catch (Throwable $e) {
+            Log::error('Contact form mail failed', [
+                'error' => $e->getMessage(),
+                'email' => $data['email'],
+            ]);
+
+            return response()->json(['message' => 'Failed to send message'], 500);
+        }
 
         Log::info('Contact form submission', [
             'name' => $data['name'],
