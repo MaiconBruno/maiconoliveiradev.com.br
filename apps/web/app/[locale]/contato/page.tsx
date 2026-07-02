@@ -1,9 +1,11 @@
 import { getTranslations } from 'next-intl/server';
 import ContactForm from '@/components/ContactForm';
 import { FadeIn } from '@/components/FadeIn';
+import { JsonLd } from '@/components/JsonLd';
+import { buildContactJsonLd } from '@/lib/json-ld';
 import { getSeoMetadata } from '@/lib/seo';
-import { fetchApi } from '@/lib/utils';
-import type { Contact } from '@portfolio/types';
+import { fetchApi, getSiteUrl } from '@/lib/utils';
+import type { Contact, Profile } from '@portfolio/types';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -13,10 +15,23 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'contact' });
-  const contact = await fetchApi<Contact>('/contact', locale);
+  const [contact, profile] = await Promise.all([
+    fetchApi<Contact>('/contact', locale),
+    fetchApi<Profile>('/profile', locale),
+  ]);
+
+  const pageUrl = `${getSiteUrl()}/${locale}/contato`;
+  const jsonLd = buildContactJsonLd({
+    profile,
+    contact,
+    pageUrl,
+    locale: locale as 'pt' | 'en',
+    pageName: t('title'),
+  });
 
   return (
     <div className="relative">
+      <JsonLd data={jsonLd} />
       <section className="relative overflow-hidden border-b border-zinc-800/60">
         <div className="bg-grid-pattern pointer-events-none absolute inset-0" aria-hidden />
         <div

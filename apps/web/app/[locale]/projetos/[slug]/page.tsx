@@ -2,12 +2,14 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { FadeIn } from '@/components/FadeIn';
+import { JsonLd } from '@/components/JsonLd';
 import { MarkdownContent } from '@/components/MarkdownContent';
 import { ProjectGalleryCarousel } from '@/components/projects/ProjectGalleryCarousel';
 import { getSeoMetadata, truncateDescription } from '@/lib/seo';
+import { buildProjectJsonLd } from '@/lib/json-ld';
 import { buildProjectGallery } from '@/lib/project-gallery';
-import { fetchApi } from '@/lib/utils';
-import type { Project } from '@portfolio/types';
+import { fetchApi, getSiteUrl } from '@/lib/utils';
+import type { Profile, Project } from '@portfolio/types';
 
 export async function generateMetadata({
   params,
@@ -43,6 +45,8 @@ export default async function ProjectDetailPage({
 }) {
   const { locale, slug } = await params;
   const t = await getTranslations({ locale, namespace: 'projects' });
+  const tNav = await getTranslations({ locale, namespace: 'nav' });
+  const homeLabel = locale === 'en' ? 'Home' : 'Início';
 
   let project: Project;
   try {
@@ -51,11 +55,27 @@ export default async function ProjectDetailPage({
     notFound();
   }
 
+  const profile = await fetchApi<Profile>('/profile', locale);
+  const pageUrl = `${getSiteUrl()}/${locale}/projetos/${slug}`;
+  const jsonLd = buildProjectJsonLd({
+    project,
+    profile,
+    pageUrl,
+    locale: locale as 'pt' | 'en',
+    labels: {
+      home: homeLabel,
+      projects: tNav('projects'),
+      about: tNav('about'),
+      contact: tNav('contact'),
+    },
+  });
+
   const galleryItems = buildProjectGallery(project);
   const highlight = project.destaques?.[0];
 
   return (
     <article>
+      <JsonLd data={jsonLd} />
       <section className="relative overflow-hidden border-b border-zinc-800/60">
         <div className="bg-grid-pattern pointer-events-none absolute inset-0" aria-hidden />
         <div

@@ -1,8 +1,10 @@
 import { getTranslations } from 'next-intl/server';
 import { FadeIn } from '@/components/FadeIn';
+import { JsonLd } from '@/components/JsonLd';
 import { ProjectsArchive } from '@/components/projects/ProjectsArchive';
+import { buildProjectsListJsonLd } from '@/lib/json-ld';
 import { getSeoMetadata } from '@/lib/seo';
-import { fetchApi } from '@/lib/utils';
+import { fetchApi, getSiteUrl } from '@/lib/utils';
 import type { Project } from '@portfolio/types';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
@@ -15,9 +17,17 @@ export default async function ProjectsPage({ params }: { params: Promise<{ local
   const t = await getTranslations({ locale });
 
   const projects = await fetchApi<Project[]>('/projects', locale);
+  const pageUrl = `${getSiteUrl()}/${locale}/projetos`;
+  const jsonLd = buildProjectsListJsonLd({
+    projects,
+    pageUrl,
+    locale: locale as 'pt' | 'en',
+    pageName: t('projects.title'),
+  });
 
   return (
     <div className="relative">
+      <JsonLd data={jsonLd} />
       <section className="relative overflow-hidden border-b border-zinc-800/60">
         <div className="bg-grid-pattern pointer-events-none absolute inset-0" aria-hidden />
         <div

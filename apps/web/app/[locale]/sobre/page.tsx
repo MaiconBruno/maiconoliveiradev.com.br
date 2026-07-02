@@ -7,7 +7,7 @@ import { ContactBand } from '@/components/home/ContactBand';
 import { ExperienceLog } from '@/components/home/ExperienceLog';
 import { SkillsManifest } from '@/components/home/SkillsManifest';
 import { JsonLd } from '@/components/JsonLd';
-import { buildPersonJsonLd } from '@/lib/json-ld';
+import { buildAboutJsonLd } from '@/lib/json-ld';
 import { getSeoMetadata } from '@/lib/seo';
 import { fetchApi, getSiteUrl } from '@/lib/utils';
 import type { Certification, Contact, Education, Experience, Profile, SkillGroup } from '@portfolio/types';
@@ -49,7 +49,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   ]);
 
   const pageUrl = `${getSiteUrl()}/${locale}/sobre`;
-  const jsonLd = buildPersonJsonLd({
+  const jsonLd = buildAboutJsonLd({
     profile,
     experiences,
     contact,
@@ -57,6 +57,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
     certifications,
     skills,
     pageUrl,
+    locale,
   });
 
   const hasEducation = education.length > 0;
