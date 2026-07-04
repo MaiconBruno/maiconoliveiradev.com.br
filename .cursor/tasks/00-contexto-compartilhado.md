@@ -2,7 +2,7 @@
 
 > Cole este bloco no início de qualquer agente, ou use como referência. Não é uma task executável sozinha.
 
-**Atualizado:** 2026-06-30
+**Atualizado:** 2026-07-03
 
 ## Leitura obrigatória
 
@@ -48,18 +48,20 @@ docker-compose.yml
 - DeepL backend (`DeepLTranslationService`, `POST /admin/translate`)
 - Upload (`ImageUploadService`, galeria image/video em projetos)
 - Site: home, projetos, case study, sobre, contato (5 rotas PT/EN)
-- SEO: `generateMetadata`, JSON-LD, fallbacks
+- SEO: `generateMetadata`, JSON-LD, `sitemap.ts`, `robots.ts`, fallbacks
+- Contato: e-mail SMTP + reCAPTCHA no `POST /contact`
+- Vercel Analytics no layout raiz
+- Deploy produção: Vercel + Hostinger
 - `packages/types` consumido no web
 - Docker: mysql + api + web
 
 ## Lacunas conhecidas
 
-- POST `/contact` não envia e-mail (só loga)
-- `sitemap.xml`, `robots.txt` ausentes
 - `html lang` fixo em `pt` no root layout
 - Nav sem estado ativo
-- Deploy produção pendente
-- CI/CD e testes API ausentes
+- Traduções EN no seed (só PT preenchido)
+- Testes API ausentes
+- GitHub Actions em PR (opcional — deploy já via Vercel + Hostinger)
 
 ## O que NÃO fazer
 

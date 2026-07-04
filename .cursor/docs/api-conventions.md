@@ -80,7 +80,7 @@ Contratos TypeScript em `packages/types/src/api.ts` espelhando estes endpoints.
 
 ---
 
-## Status implementação (2026-06-30)
+## Status implementação (2026-07-03)
 
 | Item | Status |
 |------|--------|
@@ -89,7 +89,8 @@ Contratos TypeScript em `packages/types/src/api.ts` espelhando estes endpoints.
 | Cache `max-age=300` | ✅ |
 | CORS produção + Vercel preview | ✅ |
 | Honeypot + rate limit contato | ✅ |
-| POST contact → e-mail SMTP | ⚠️ só `Log::info` |
+| reCAPTCHA no POST contact | ✅ |
+| POST contact → e-mail SMTP | ✅ `ContactFormSubmitted` |
 | Invalidação cache no admin | ❌ opcional |
 | Testes feature | ❌ |
 | `nivel` em GET `/skills` | ❌ omitido na resposta |

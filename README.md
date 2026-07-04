@@ -70,13 +70,14 @@ npm run dev
 - **API v1** — 10 endpoints públicos + CORS + cache 5 min
 - **Admin** — 8 módulos CRUD, tabs PT/EN, DeepL, upload de mídia
 - **Site** — 5 rotas bilíngues, SEO, JSON-LD, animações
+- **Deploy contínuo** — Vercel (web) + Hostinger Git (api)
 - **Seed** — `PortfolioDataSeeder` a partir de `portfolio-data.md`
 
 ## Pendências principais
 
-- Envio de e-mail no formulário de contato
-- `sitemap.xml`, polish de navegação e acessibilidade
-- CI/CD GitHub Actions
+- `html lang` dinâmico e nav ativa no header
+- Traduções EN no seed (gerar via DeepL no admin)
+- Testes automatizados da API
 
 ## Documentação
 

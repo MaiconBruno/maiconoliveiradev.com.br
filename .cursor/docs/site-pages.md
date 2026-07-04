@@ -2,7 +2,7 @@
 
 > Rotas com prefixo de locale — ver [i18n.md](i18n.md). Raiz `/` redireciona via cookie.
 
-**Status (2026-06-30):** 5/5 rotas implementadas em `apps/web`. Pendências: sitemap, nav ativa, `html lang` dinâmico.
+**Status (2026-07-03):** 5/5 rotas implementadas em `apps/web`. Pendências: nav ativa, `html lang` dinâmico.
 
 ## Rotas
 

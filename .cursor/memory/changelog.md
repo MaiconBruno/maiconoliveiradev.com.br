@@ -8,6 +8,16 @@ Histórico de mudanças relevantes no projeto e na documentação `.cursor`.
 
 ## Entradas
 
+### 2026-07-03
+
+- **MVP em produção** — site na Vercel, API/admin na Hostinger com DNS configurado
+- Formulário de contato com e-mail SMTP, reCAPTCHA e honeypot
+- `sitemap.ts` e `robots.ts` no Next.js; Vercel Analytics integrado
+- Documentação `.cursor/` revisada (memory, tasks, workflows, readiness-checklist)
+- `design-system.md` — linguagem neutra (sem referências a recrutador)
+- Pendências atualizadas: polish web (`html lang`, nav ativa), EN no seed, testes
+- Deploy contínuo documentado: Vercel (web) + Hostinger Git (api); GitHub Actions opcional
+
 ### 2026-06-30
 
 - **Documentação revisada** — status atual alinhado ao código em todos os `.md`

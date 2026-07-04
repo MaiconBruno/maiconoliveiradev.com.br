@@ -8,7 +8,7 @@ description: >-
 
 # Gerar / evoluir portfólio
 
-**Status (2026-06-30):** Scaffold gerado. Modo atual = **evolução** (polish, deploy, lacunas).
+**Status (2026-07-03):** MVP em produção. Modo atual = **evolução** (polish, conteúdo EN).
 
 ## Antes de codar
 
@@ -40,17 +40,19 @@ portfolio-data.md
 - DeepL (`DeepLTranslationService`, `POST /admin/translate`)
 - Upload (`ImageUploadService`, galeria image/video)
 - Site: home, projetos, case, sobre, contato
-- SEO: `generateMetadata` + JSON-LD
+- SEO: `generateMetadata` + JSON-LD + `sitemap.ts` + `robots.ts`
+- Contato: e-mail SMTP + reCAPTCHA
+- Vercel Analytics
+- Deploy produção (Vercel + Hostinger)
+- Deploy contínuo: Vercel (push → deploy web) + Hostinger (Git → API)
 - Docker Compose local
 
 ## Lacunas conhecidas (prioridade)
 
-1. E-mail SMTP no `POST /contact`
-2. Deploy produção (task 15)
-3. `sitemap.xml`, `robots.txt`, `html lang` dinâmico
-4. Nav ativa no header
-5. CI/CD GitHub Actions (task 16)
-6. Testes API
+1. `html lang` dinâmico, nav ativa no header (task 13)
+2. Traduções EN no seed (DeepL no admin)
+3. Testes API
+4. GitHub Actions lint/test em PR (opcional)
 
 ## Ordem para novas features
 

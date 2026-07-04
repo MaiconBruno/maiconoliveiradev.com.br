@@ -31,31 +31,48 @@ Vercel (Next.js)  →  API Laravel (Hostinger)  →  MySQL (Hostinger)
 - `.cursor/context/`
 - `.cursor/docs/`
 
-## Status atual (2026-06-30)
+## Status atual (2026-07-03)
+
+### Produção
+
+| Serviço | URL |
+|---------|-----|
+| Site (PT/EN) | https://maiconoliveiradev.com.br |
+| API REST | https://admin.maiconoliveiradev.com.br/api/v1 |
+| Painel admin | https://admin.maiconoliveiradev.com.br/login |
+
+### Deploy contínuo
+
+| App | Plataforma | Gatilho |
+|-----|------------|---------|
+| `apps/web` | **Vercel** | Push no repo → build + deploy automático |
+| `apps/api` | **Hostinger** | Deploy via Git |
 
 ### Implementado
 
 | Camada | Status |
 |--------|--------|
 | `apps/api` — Laravel 12 | API v1 (10 endpoints), admin Inertia (8 módulos), DeepL, upload |
-| `apps/web` — Next.js 15 | 5 rotas PT/EN, integração API, SEO, Framer Motion |
+| `apps/web` — Next.js 15 | 5 rotas PT/EN, integração API, SEO, sitemap/robots, Framer Motion |
 | `packages/types` | Contratos TypeScript compartilhados |
 | Docker local | `mysql` + `api` + `web` via `docker compose` |
 | Seed | `PortfolioDataSeeder` + `AdminUserSeeder` |
+| Contato | E-mail SMTP + reCAPTCHA + honeypot |
+| Analytics | Vercel Analytics no layout raiz |
+| Deploy | Vercel (site) + Hostinger (API/admin) com DNS |
 
 ### Pendente / polish
 
-- Envio real de e-mail no formulário de contato
-- Deploy produção (Vercel + Hostinger com DNS)
-- `sitemap.xml`, `robots.txt`, `html lang` dinâmico, nav ativa
-- CI/CD GitHub Actions
+- `html lang` dinâmico, nav ativa no header
+- Traduções EN no seed (gerar via DeepL no admin)
 - Testes automatizados da API
+- GitHub Actions para lint/test em PR (opcional — deploy já coberto)
 
 ### Domínios
 
 - Site: `maiconoliveiradev.com.br` → Vercel
 - API + Admin: `admin.maiconoliveiradev.com.br` → Hostinger
 
-**Próximo passo:** deploy produção (task 15) e polish final do site (tasks 12–13).
+**Próximo passo:** polish web (task 13) e conteúdo EN.
 
 Detalhes: [readiness-checklist.md](../docs/readiness-checklist.md)

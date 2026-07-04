@@ -1,5 +1,7 @@
 # Produção — deploy seguro (main)
 
+**Status (2026-07-03):** Ativo — Vercel (web) e Hostinger Git (api) com deploy automático na `main`.
+
 Front (Vercel) e back (Hostinger) no ar. Este guia evita que push na `main` desconfigure produção.
 
 ---

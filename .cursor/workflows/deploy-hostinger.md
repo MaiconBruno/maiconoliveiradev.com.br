@@ -1,7 +1,7 @@
 # Deploy — Hostinger (API + Admin)
 
 > **Escopo:** `apps/api` em `admin.maiconoliveiradev.com.br`.  
-> Site Next.js (Vercel) — ver [deploy-initial.md](./deploy-initial.md). **Código do site pronto (2026-06-30).**
+> Site Next.js (Vercel) — ver [deploy-initial.md](./deploy-initial.md). **Em produção (2026-07-03).**
 
 ---
 

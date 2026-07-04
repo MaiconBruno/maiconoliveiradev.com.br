@@ -2,7 +2,14 @@
 
 > Contexto persistente para o agente: domínio, público-alvo, tom, restrições e fontes de verdade.
 
-**Status (2026-06-30):** MVP funcional em desenvolvimento local. Ver [readiness-checklist.md](../docs/readiness-checklist.md).
+**Status (2026-07-03):** MVP em produção. Ver [readiness-checklist.md](../docs/readiness-checklist.md).
+
+## Produção
+
+| Serviço | URL |
+|---------|-----|
+| Site | https://maiconoliveiradev.com.br |
+| API + Admin | https://admin.maiconoliveiradev.com.br |
 
 ## Produto
 
@@ -36,6 +43,13 @@ Portfólio profissional com **painel administrativo**:
 |-------------------|---------|
 | `maiconoliveiradev.com.br` (+ `www`) | Vercel (site público Next.js) |
 | `admin.maiconoliveiradev.com.br` | Hostinger (Laravel API + painel admin) |
+
+## Deploy contínuo
+
+| App | Plataforma | Gatilho |
+|-----|------------|---------|
+| `apps/web` | Vercel | Push no repo → build + deploy automático |
+| `apps/api` | Hostinger | Git no hPanel → `deploy-hostinger.sh` pós-pull |
 
 ## Design (site público)
 

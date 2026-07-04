@@ -70,10 +70,9 @@
 
 - PostgreSQL / Prisma / Sanctum
 - Docker em produção (só dev local)
-- Analytics
 - Filtro projetos por stack
 
-## Status (2026-06-30)
+## Status (2026-07-03)
 
 - [x] Arquitetura, domínios, versões
 - [x] Monorepo, i18n, DeepL, design
@@ -83,5 +82,7 @@
 - [x] API v1 + admin 8 módulos
 - [x] Site público 5 rotas
 - [x] Docker Compose local
-- [ ] Deploy produção completo
-- [ ] CI/CD GitHub Actions
+- [x] Deploy produção (Vercel + Hostinger)
+- [x] Deploy contínuo (Vercel auto + Hostinger Git)
+- [x] Vercel Analytics
+- [ ] GitHub Actions lint/test em PR (opcional)
