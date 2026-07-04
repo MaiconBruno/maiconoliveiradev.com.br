@@ -2,7 +2,7 @@
 
 Next.js 15 (App Router) com next-intl, Tailwind CSS 4 e Framer Motion.
 
-**Deploy:** Vercel → `maiconoliveiradev.com.br`
+**Produção:** https://maiconoliveiradev.com.br (Vercel)
 
 ## Rotas
 
@@ -31,12 +31,22 @@ Site: http://localhost:3000/pt
 
 ## Variáveis de ambiente
 
-Copiar de `.env.example`:
+Copiar de `.env.example`.
+
+**Desenvolvimento local:**
 
 ```env
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXT_PUBLIC_API_URL=http://localhost:8000
 API_INTERNAL_URL=http://api:8000   # SSR no Docker
+NEXT_PUBLIC_DEFAULT_LOCALE=pt
+```
+
+**Produção (Vercel):**
+
+```env
+NEXT_PUBLIC_APP_URL=https://maiconoliveiradev.com.br
+NEXT_PUBLIC_API_URL=https://admin.maiconoliveiradev.com.br
 NEXT_PUBLIC_DEFAULT_LOCALE=pt
 ```
 

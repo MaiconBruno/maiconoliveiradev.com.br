@@ -2,7 +2,7 @@
 
 Cada arquivo `NN-*.md` é um prompt **autocontido** para um agente Cursor executar uma feature restante do portfólio.
 
-**Status geral (2026-06-30):** MVP implementado. Tasks 01–14 concluídas ou quase; foco em 15 (deploy) e polish residual.
+**Status geral (2026-07-03):** MVP em produção. Tasks 01–15 concluídas; deploy contínuo via Vercel + Hostinger Git. Foco em polish residual (13).
 
 ## Mapa de conclusão
 
@@ -13,18 +13,18 @@ Cada arquivo `NN-*.md` é um prompt **autocontido** para um agente Cursor execut
 | 02 | Admin: Hero/Sobre | ✅ Concluída | |
 | 03 | Admin: Experiências | ✅ Concluída | + campo `progressao` |
 | 04 | Admin: Skills | ✅ Concluída | |
-| 05 | Admin: Contato | ⚠️ Parcial | POST API não envia e-mail |
+| 05 | Admin: Contato | ✅ Concluída | E-mail SMTP + reCAPTCHA |
 | 06 | Admin: SEO | ✅ Concluída | |
 | 07 | Admin: Formação | ✅ Concluída | |
 | 08 | Admin: Certificações | ✅ Concluída | |
 | 09 | Admin: i18n UI | ✅ Concluída | Tabs + DeepL |
 | 10 | Admin: Upload | ✅ Concluída | Galeria vídeo |
 | 11 | Admin: Shell | ✅ Concluída | Sidebar + layout |
-| 12 | Web: SEO | ⚠️ Parcial | Falta sitemap/robots |
+| 12 | Web: SEO | ✅ Concluída | + sitemap/robots |
 | 13 | Web: Polish | ⚠️ Parcial | Nav ativa, `html lang`, shadcn |
 | 14 | packages/types | ✅ Concluída | |
-| 15 | Deploy produção | 🔄 Em andamento | Workflows prontos |
-| 16 | CI/CD | ❌ Pendente | |
+| 15 | Deploy produção | ✅ Concluída | Vercel + Hostinger |
+| 16 | GitHub Actions (lint/test) | ❓ Opcional | Deploy já via Vercel + Hostinger |
 
 ## Como usar
 
@@ -37,14 +37,24 @@ Cada arquivo `NN-*.md` é um prompt **autocontido** para um agente Cursor execut
 
 | Onda | Tasks | Foco |
 |------|-------|------|
-| 1 | `05` (e-mail), `12`, `13` | Polish + contato |
-| 2 | `15` | Deploy produção |
-| 3 | `16` | CI/CD (opcional) |
+| 1 | `13` | Polish web (`html lang`, nav ativa) |
+
+## Deploy contínuo
+
+| App | Plataforma |
+|-----|------------|
+| `apps/web` | Vercel — push → build + deploy automático |
+| `apps/api` | Hostinger — deploy via Git |
 
 ## Credenciais locais
 
 - Admin: http://localhost:8000/login — `devmaiconrodrigues@gmail.com` / `admin123456`
 - Site: http://localhost:3000/pt
+
+## Produção
+
+- Site: https://maiconoliveiradev.com.br
+- Admin: https://admin.maiconoliveiradev.com.br/login
 
 ## Mapa de dependências
 
@@ -54,9 +64,9 @@ Cada arquivo `NN-*.md` é um prompt **autocontido** para um agente Cursor execut
             │                  └──► 09-i18n-ui ✅
             └──► 13-web-polish ⚠️
 
-06-admin-seo ──► 12-web-seo ⚠️
+06-admin-seo ──► 12-web-seo ✅
 
 14-types ✅
 
-09 + 12 + 13 ──► 15-deploy 🔄 ──► 16-ci-cd ❌
+09 + 12 + 13 ──► 15-deploy ✅    16-actions ❓ (opcional)
 ```

@@ -17,7 +17,7 @@ Antes de implementar, carregar documentação em `.cursor/`:
 - `apps/web` — Next.js 15 → Vercel → `maiconoliveiradev.com.br`
 - `apps/api` — Laravel 12 → Hostinger → `admin.maiconoliveiradev.com.br`
 - `packages/types` — contratos TypeScript compartilhados
-- MVP funcional em dev local; ver `docs/readiness-checklist.md`
+- MVP em produção; ver `docs/readiness-checklist.md`
 
 ## Regras
 

@@ -2,7 +2,7 @@
 
 Laravel 12 com API REST JSON (`/api/v1`) e painel administrativo Inertia + React.
 
-**Deploy:** Hostinger → `admin.maiconoliveiradev.com.br`
+**Produção:** https://admin.maiconoliveiradev.com.br (Hostinger — API + admin)
 
 ## Rotas principais
 

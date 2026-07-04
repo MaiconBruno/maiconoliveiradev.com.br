@@ -1,7 +1,7 @@
 # Task 12 — Site: SEO dinâmico (Next.js)
 
 **ID do agente:** `web-seo`  
-**Status:** ⚠️ Parcial (2026-06-30) — metadata + JSON-LD OK; falta sitemap/robots  
+**Status:** ✅ Concluída (2026-07-03) — metadata + JSON-LD + `sitemap.ts` + `robots.ts`  
 **Depende de:** Task 06 ✅
 
 ---

@@ -1,58 +1,48 @@
-# Task 16 — CI/CD (opcional)
+# Task 16 — GitHub Actions lint/test (opcional)
 
 **ID do agente:** `ci-cd`  
-**Status:** ❌ Pendente (2026-06-30)  
-**Depende de:** Task 15 (deploy manual funcionando)
+**Status:** ❓ Opcional / não necessário para deploy (2026-07-03)  
+**Depende de:** Task 15 ✅
 
 ---
 
-## Objetivo
+## Contexto
 
-Automatizar **lint e build** no GitHub Actions e preparar deploy contínuo.
+**Deploy contínuo já está ativo:**
+
+| App | Plataforma | Como funciona |
+|-----|------------|---------------|
+| `apps/web` | **Vercel** | Repo conectado → push na branch de produção → build + deploy automático |
+| `apps/api` | **Hostinger** | Deploy via Git no hPanel |
+
+A Vercel já executa build do Next.js a cada push. Não é obrigatório duplicar isso no GitHub Actions.
+
+## Objetivo (se implementar)
+
+Adicionar **checks em PR** (lint + testes) antes do merge — complementar, não substituir Vercel/Hostinger.
 
 ## Leitura obrigatória
 
 - `.cursor/tasks/00-contexto-compartilhado.md`
 - `.cursor/docs/monorepo.md`
+- `.cursor/workflows/deploy-producao.md`
 
-## Escopo
+## Escopo (opcional)
 
 ### Workflow CI (`.github/workflows/ci.yml`)
-- Trigger: `push` e `pull_request` em `main`
+- Trigger: `pull_request` em `main` (e opcionalmente `push`)
 - Jobs paralelos:
   1. **web** — `cd apps/web && npm ci && npm run lint && npm run build`
-  2. **api** — `cd apps/api && composer install && php artisan test` (se houver testes) ou `php -l` + pint opcional
+  2. **api** — `cd apps/api && composer install && php artisan test` (quando houver testes)
 
-### Workflow deploy (opcional)
-- Vercel já faz deploy automático se conectado ao repo
-- Hostinger: documentar deploy via FTP/Git ou webhook (sem secrets no repo)
+### Não duplicar
+- Deploy web → já é da Vercel
+- Deploy API → já é da Hostinger (Git)
+- Secrets de produção → nunca no repo
 
-### Documentação
-- Atualizar README com badge CI
-- Seção "Como contribuir" com comandos locais
+## Critério de pronto (se for feito)
 
-## Arquivos principais
-
-```
-.github/workflows/ci.yml           (criar)
-README.md                        (badge + instruções)
-```
-
-## Não mexer em
-
-- Lógica de aplicação
-- Secrets no repositório
-
-## Teste
-
-```bash
-# Push em branch → Actions verdes
-# Build web e validação api passam
-```
-
-## Critério de pronto
-
-- [ ] CI roda em cada PR
-- [ ] Build Next.js passa no CI
-- [ ] API validada (composer + testes ou lint PHP)
-- [ ] README documenta o pipeline
+- [ ] CI roda em PRs
+- [ ] Lint + build web passam
+- [ ] API validada (testes ou lint PHP)
+- [ ] README documenta que deploy é Vercel + Hostinger; Actions só para checks

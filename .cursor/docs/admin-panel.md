@@ -66,7 +66,7 @@ Mesmo deploy Hostinger que a API — Inertia serve o React compilado pelo Vite; 
 
 ---
 
-## Status implementação (2026-06-30)
+## Status implementação (2026-07-03)
 
 | Item | Status |
 |------|--------|

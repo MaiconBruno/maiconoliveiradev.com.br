@@ -6,7 +6,7 @@ Identidade visual unificada: **site público** (Next.js) e **painel admin** (Ine
 
 | Objetivo | Como aplicar |
 |----------|--------------|
-| Chamar atenção do recrutador | Hierarquia clara + **laranja só em pontos de ação** (CTA, métricas, links ativos) |
+| Chamar a atenção | Hierarquia clara + **laranja só em pontos de ação** (CTA, métricas, links ativos) |
 | Transmitir senioridade tech | Fundo **dark** limpo, tipografia forte, pouco ruído |
 | Memorável sem amadorismo | Laranja em **~10–15%** da UI — nunca fundos grandes laranja |
 | Confiança | Contraste AA, consistência de tokens entre site e admin |
@@ -94,7 +94,7 @@ Usar em `apps/web` e `apps/api` (Tailwind `theme.extend` ou CSS variables).
 | Stack / código | **Geist Mono** ou JetBrains Mono | 400 |
 
 - `letter-spacing`: levemente negativo em headlines grandes (`-0.02em`)
-- Line-height generoso no body (`1.6–1.75`) — leitura rápida para recrutador
+- Line-height generoso no body (`1.6–1.75`) — boa legibilidade
 
 ---
 
@@ -160,7 +160,7 @@ Monorepo: `packages/ui-tokens/` com `tailwind.preset.js` exportando cores e font
 
 ---
 
-## Referência rápida — impacto no recrutador
+## Referência rápida — hierarquia visual
 
 ```
 [ Hero — nome + headline + barra laranja + CTA laranja ]  ← 3s de atenção
@@ -174,7 +174,7 @@ O olhar segue: **nome → CTA → projetos → prova social (métricas)** — la
 
 ---
 
-## Status implementação (2026-06-30)
+## Status implementação (2026-07-03)
 
 | Item | Site (`apps/web`) | Admin (`apps/api`) |
 |------|-----------------|---------------------|

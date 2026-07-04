@@ -1,6 +1,6 @@
 # Deploy inicial
 
-**Status (2026-06-30):** Código pronto para deploy. DNS, Vercel e Hostinger em configuração.
+**Status (2026-07-03):** Deploy concluído. Site na Vercel, API/admin na Hostinger com DNS configurado.
 
 ## Domínios
 
@@ -12,11 +12,11 @@
 - [x] Domínio definido
 - [x] Código MVP (apps/web + apps/api)
 - [x] Scripts deploy Hostinger (`deploy-hostinger.sh`)
-- [ ] DNS `@`/`www` → Vercel; `admin` → Hostinger
-- [ ] MySQL criado no hPanel
-- [ ] `DEEPL_API_KEY` (DeepL Free)
-- [ ] SMTP Hostinger em `apps/api/.env`
-- [ ] `ADMIN_PASSWORD` forte no `.env` (não usar `admin123456`)
+- [x] DNS `@`/`www` → Vercel; `admin` → Hostinger
+- [x] MySQL criado no hPanel
+- [x] `DEEPL_API_KEY` (DeepL Free)
+- [x] SMTP Hostinger em `apps/api/.env`
+- [x] `ADMIN_PASSWORD` forte no `.env` (não usar `admin123456`)
 
 ## DNS (Hostinger)
 

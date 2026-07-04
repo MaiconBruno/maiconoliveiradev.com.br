@@ -1,7 +1,7 @@
 # Task 15 — Deploy produção
 
 **ID do agente:** `deploy-prod`  
-**Status:** 🔄 Em andamento (2026-06-30) — workflows prontos; DNS/Vercel pendentes  
+**Status:** ✅ Concluída (2026-07-03) — Vercel + Hostinger publicados com DNS  
 **Depende de:** MVP estável (tasks 01–13 principais) ✅
 
 ---

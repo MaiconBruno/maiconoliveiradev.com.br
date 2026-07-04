@@ -158,7 +158,7 @@ Não fabricar métricas, projetos ou certificações — alinhado a `portfolio-d
 
 ---
 
-## Status geral (2026-06-30)
+## Status geral (2026-07-03)
 
 | Módulo | Admin | API pública |
 |--------|-------|-------------|
@@ -166,7 +166,7 @@ Não fabricar métricas, projetos ou certificações — alinhado a `portfolio-d
 | 2 Hero/Sobre | ✅ | ✅ |
 | 3 Experiências | ✅ | ✅ |
 | 4 Skills | ✅ | ⚠️ sem `nivel` |
-| 5 Contato | ✅ | ⚠️ POST só loga |
+| 5 Contato | ✅ | ✅ e-mail + reCAPTCHA |
 | 6 SEO | ✅ | ✅ |
 | 7 Formação | ✅ | ✅ |
 | 8 Certificações | ✅ | ✅ |

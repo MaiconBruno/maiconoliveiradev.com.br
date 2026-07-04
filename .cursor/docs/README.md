@@ -2,7 +2,14 @@
 
 > Especificações, arquitetura, guias e referências do portfólio.
 
-**Última revisão:** 2026-06-30 · **Status:** MVP funcional em dev local (~85–90%)
+**Última revisão:** 2026-07-03 · **Status:** MVP em produção (~90–95%)
+
+## Produção
+
+| Serviço | URL |
+|---------|-----|
+| Site | https://maiconoliveiradev.com.br |
+| API + Admin | https://admin.maiconoliveiradev.com.br |
 
 ## Índice
 
