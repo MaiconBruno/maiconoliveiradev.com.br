@@ -2,7 +2,15 @@
 
 Monorepo do portfólio profissional com painel administrativo.
 
-**Status (2026-06-30):** MVP funcional em dev local — API, admin e site implementados. Deploy produção pendente.
+**Status (2026-07-03):** Em produção — site, API e painel admin publicados.
+
+## Produção
+
+| Serviço | URL |
+|---------|-----|
+| Site (PT/EN) | https://maiconoliveiradev.com.br |
+| API REST | https://admin.maiconoliveiradev.com.br/api/v1 |
+| Painel admin | https://admin.maiconoliveiradev.com.br/login |
 
 | App | Stack | Deploy |
 |-----|-------|--------|
@@ -67,7 +75,6 @@ npm run dev
 ## Pendências principais
 
 - Envio de e-mail no formulário de contato
-- Deploy produção (DNS, Vercel, Hostinger)
 - `sitemap.xml`, polish de navegação e acessibilidade
 - CI/CD GitHub Actions
 
